@@ -13,7 +13,7 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title">Add file:</h5>
-					<form method="POST">{% csrf_token %}
+					<form enctype="multipart/form-data" method="POST">{% csrf_token %}
 					{{ form }}
 						<button class="mt-2 btn btn-secondary" type="submit">upload</button>
 					</form>
