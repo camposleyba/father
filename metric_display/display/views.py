@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
 from .models import metric
 import pandas as pd
+from django.db.models import Sum
 
 #def handle_uploaded_file(f):
 #	with open("C:/Users/016434613/Dev/metric_display/display/file.xlsm",'wb+') as destination:
@@ -11,13 +12,12 @@ import pandas as pd
 def home(request):
 	if request.method == "POST":
 		input_form = inputf(request.POST, request.FILES)
-		context = {
-			'form':input_form
-		}
+
 		if input_form.is_valid():
 			#handle_uploaded_file(request.FILES['inputfile'])
 			file = pd.read_excel(request.FILES['inputfile'],sheet_name="Metricdisplay")
 
+			#-- Start by clearing the database
 			metric.objects.all().delete()
 			
 			for i in range(file["MANAGER"].size):
@@ -30,10 +30,73 @@ def home(request):
 				db_metric.save()
 
 
-	else:
-		input_form = inputf(request.POST or None)
 		context = {
 			'form':input_form
 		}
 
+		return redirect('display')
+
+
+	else:
+		input_form = inputf(request.POST or None)
+		context = {
+			'form':input_form,
+		}
+
 	return render(request, 'display/home.html', context)
+
+
+def display(request):
+	data = metric.objects.all()
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/display.html", context)
+
+def martin(request):
+	data = metric.objects.filter(manager="Martin Campos")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/display.html", context)
+
+def marek(request):
+	data = metric.objects.filter(manager="Marek Tarkos")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/display.html", context)
+
+def andrej(request):
+	data = metric.objects.filter(manager="Andrej Csiaki")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/display.html", context)
+
+def francisco(request):
+	data = metric.objects.filter(manager="Francisco del Castillo")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/display.html", context)
