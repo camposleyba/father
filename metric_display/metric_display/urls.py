@@ -23,10 +23,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('display/', views.display, name="display"),
+    path('pivot/', views.pivot, name="pivot"),
+    path('pivot/orderby/', views.orderbycount, name="orderbycount"),
+    path('pivot/orderbyhs/', views.orderbyhs, name="orderbyhs"),
     path('filter/MC/', views.martin, name="martin"),
     path('filter/MT/', views.marek, name="marek"),
     path('filter/AC/', views.andrej, name="andrej"),
     path('filter/FC/', views.francisco, name="francisco"),
+    path('pivot/MC/', views.martinpivot, name="martinpivot"),
+    path('pivot/MT/', views.marekpivot, name="marekpivot"),
+    path('pivot/AC/', views.andrejpivot, name="andrejpivot"),
+    path('pivot/FC/', views.franciscopivot, name="franciscopivot"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

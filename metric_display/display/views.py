@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import *
-from .models import metric
+from .models import metric, metricpivot
 import pandas as pd
 from django.db.models import Sum
 
@@ -29,6 +29,18 @@ def home(request):
 				db_metric.tot_hours = file["HS"][i]
 				db_metric.save()
 
+			file_ = pd.read_excel(request.FILES['inputfile'],sheet_name="Pivotmetricdisplay")
+
+			metricpivot.objects.all().delete()
+
+			for i in range(file_["MANAGER"].size):
+				db_metric_ = metricpivot()
+				db_metric_.manager = file_["MANAGER"][i]
+				db_metric_.developer = file_["DEVELOPERS"][i]
+				db_metric_.tot_bots = file_["ROBOT NUMBER"][i]
+				db_metric_.tot_hours = file_["HS SAVED"][i]
+				db_metric_.save()
+
 
 		context = {
 			'form':input_form
@@ -56,6 +68,17 @@ def display(request):
 		'sumahs':sumahs
 	}
 	return render(request, "display/display.html", context)
+
+def pivot(request):
+	data = metricpivot.objects.all()
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
 
 def martin(request):
 	data = metric.objects.filter(manager="Martin Campos")
@@ -100,3 +123,101 @@ def francisco(request):
 		'sumahs':sumahs
 	}
 	return render(request, "display/display.html", context)
+
+def martinpivot(request):
+	data = metricpivot.objects.filter(manager="Martin Campos")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
+
+def marekpivot(request):
+	data = metricpivot.objects.filter(manager="Marek Tarkos")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
+
+def andrejpivot(request):
+	data = metricpivot.objects.filter(manager="Andrej Csiaki")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
+
+def franciscopivot(request):
+	data = metricpivot.objects.filter(manager="Francisco del Castillo")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
+
+def orderbycount(request):
+	dire = request.META.get('HTTP_REFERER')
+	direlist = dire.split("/")
+	
+	if direlist[4] == "MC":
+		mgr="Martin Campos"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
+	elif direlist[4] == "MT":
+		mgr="Marek Tarkos"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
+	elif direlist[4] == "AC":
+		mgr="Andrej Csiaki"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
+	elif direlist[4] == "FC":
+		mgr="Francisco del Castillo"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
+	else:
+		data = metricpivot.objects.all().order_by("-tot_bots")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)
+
+def orderbyhs(request):
+	dire = request.META.get('HTTP_REFERER')
+	direlist = dire.split("/")
+	
+	if direlist[4] == "MC":
+		mgr="Martin Campos"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
+	elif direlist[4] == "MT":
+		mgr="Marek Tarkos"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
+	elif direlist[4] == "AC":
+		mgr="Andrej Csiaki"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
+	elif direlist[4] == "FC":
+		mgr="Francisco del Castillo"
+		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
+	else:
+		data = metricpivot.objects.all().order_by("-tot_hours")
+	sumabots = sum(data.values_list('tot_bots', flat=True))
+	sumahs = sum(data.values_list('tot_hours', flat=True))
+	context = {
+		'data':data,
+		'sumabots':sumabots,
+		'sumahs':sumahs
+	}
+	return render(request, "display/pivot.html", context)

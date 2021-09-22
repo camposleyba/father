@@ -8,18 +8,26 @@
 
 <br>
 	<div class="mx-5">
-		<div class="dropdown">
-		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Manager
-		  </button>
-			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
-	    		<a href="{% url 'martin' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Martin Campos</button></li></a>
-	    		<a href="{% url 'marek' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Marek Tarkos</button></li></a>
-	    		<a href="{% url 'andrej' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Andrej Csiaki</button></li></a>
-	    		<a href="{% url 'francisco' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Francisco del Castillo</button></li></a>
-			  </ul>
+		<div class="card text-dark bg-light">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Manager
+						  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
+					    		<a href="{% url 'martin' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Martin Campos</button></li></a>
+					    		<a href="{% url 'marek' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Marek Tarkos</button></li></a>
+					    		<a href="{% url 'andrej' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Andrej Csiaki</button></li></a>
+					    		<a href="{% url 'francisco' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Francisco del Castillo</button></li></a>
+							  </ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
-	<br>
+		<br>
 		<div class="card text-dark bg-light mb-3" style="max-width: 80rem;">
 			
 				<table class="table table-borderless border-light table-hover">
