@@ -13,17 +13,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'display/custom.css' %}">
     <link rel="stylesheet" href="{% static 'display/sidebar.css' %}">
+    <link rel="icon" type="image/png"  href="{% static 'display/logo.png' %}">
 
     <title>Display-Metric</title>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">home</a>
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'display/logo.png' %}" width="25" height="25"> home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-        <a class="nav-link" href="https://www.notion.so/4f934d57e0654fb4a0e26583e0b7391c?v=5fb7ec7f728f4f4ab648ef82dfb9e1c3" target="_blank">Notion</a>
+            <div class="nav-item dropdown" id="navbar-links">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Nav. Links</button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenu2">
+                    <li><a class="dropdown-item" href="https://www.notion.so/4f934d57e0654fb4a0e26583e0b7391c?v=5fb7ec7f728f4f4ab648ef82dfb9e1c3" target="_blank">Notion</a></li>
+                    <li><a class="dropdown-item" href="https://w3.ibm.com/w3publisher/digital" target="_blank">Digital Transformation</a></li>
+                </ul>
+            </div>  
+          
         </div>
     </nav>
 
@@ -31,7 +40,9 @@
     <div id="wrapper">
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-          <li><a href="{% url 'display' %}">Display All</a></li>
+          <li><a href="{% url 'display' %}">
+              Display All
+            </a></li>
           <li><a href="{% url 'pivot' %}">Pivot</a></li>
         </ul>
       </div>    
