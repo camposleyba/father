@@ -18,3 +18,13 @@ class metricpivot(models.Model):
 
 	def __str__(self):
 		return self.manager
+
+class backlog(models.Model):
+	status = models.CharField(blank=True, max_length=200)
+	bot_nbr = models.CharField(blank=True, max_length=200)
+	title = models.CharField(blank=True, max_length=200)
+	autotype = models.CharField(blank=True, max_length=200)
+	region = models.CharField(blank=True, max_length=200)
+
+	def __str__(self):
+		return self.title

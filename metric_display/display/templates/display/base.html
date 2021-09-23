@@ -21,7 +21,7 @@
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'display/logo.png' %}" width="25" height="25"> home</a>
+          <img src="{% static 'display/logo.png' %}" width="30" height="30"> home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -30,6 +30,7 @@
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenu2">
                     <li><a class="dropdown-item" href="https://www.notion.so/4f934d57e0654fb4a0e26583e0b7391c?v=5fb7ec7f728f4f4ab648ef82dfb9e1c3" target="_blank">Notion</a></li>
                     <li><a class="dropdown-item" href="https://w3.ibm.com/w3publisher/digital" target="_blank">Digital Transformation</a></li>
+                    <li><a class="dropdown-item" href="https://w3.ibm.com/w3publisher/1977" target="_blank">1977 Web</a></li>
                     <li><a class="dropdown-item" href="https://progress.us1a.cirrus.ibm.com" target="_blank">Progress</a></li>
                     <li><a class="dropdown-item" href="https://progress-kyndryl.wdc1a.cirrus.ibm.com" target="_blank">Progress Kyndryl</a></li>
                     
@@ -45,9 +46,21 @@
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <li><a href="{% url 'display' %}">
+            <img src="{% static 'display/display.png' %}" width="25" height="25">
               Display All
             </a></li>
-          <li><a href="{% url 'pivot' %}">Pivot</a></li>
+          <li><a href="{% url 'pivot' %}">
+            <img src="{% static 'display/pivot.png' %}" width="25" height="25">
+            Pivot</a></li>
+          <li><a href="{% url 'backlogpage' %}">
+            <img src="{% static 'display/backlog.png' %}" width="25" height="25">
+            Backlog</a></li>
+          <li><a href="{% url 'displaybacklog' %}">
+            <img src="{% static 'display/backlogall.png' %}" width="25" height="25">
+            Backlog All</a></li>
+          <li><a href="#">
+            <img src="{% static 'display/awards.png' %}" width="25" height="25">
+            Awards</a></li>
         </ul>
       </div>    
 

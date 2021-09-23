@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import *
-from .models import metric, metricpivot
+from .models import metric, metricpivot, backlog
 import pandas as pd
 from django.db.models import Sum
 
@@ -56,6 +56,50 @@ def home(request):
 		}
 
 	return render(request, 'display/home.html', context)
+
+def backlogpage(request):
+	if request.method == "POST":
+		input_form = inputf(request.POST, request.FILES)
+
+		if input_form.is_valid():
+			#handle_uploaded_file(request.FILES['inputfile'])
+			file = pd.read_excel(request.FILES['inputfile'],sheet_name="rfd")
+
+			#-- Start by clearing the database
+			backlog.objects.all().delete()
+			
+			for i in range(file["STATUS"].size):
+				db_backlog = backlog()
+				db_backlog.status = file["STATUS"][i]
+				db_backlog.bot_nbr = file["ROBOT NUMBER"][i]
+				db_backlog.title = file["TITLE"][i]
+				db_backlog.autotype = file["AUTOMATION TYPE"][i]
+				db_backlog.region = file["REGIONS"][i]
+				db_backlog.save()
+		
+		context = {
+			'form':input_form
+		}
+
+		return redirect('displaybacklog')
+
+
+	else:
+		input_form = inputf(request.POST or None)
+		context = {
+			'form':input_form,
+		}
+
+	return render(request, 'display/backlog.html', context)
+
+def displaybacklog(request):
+	data = backlog.objects.filter(status="Ready for development", bot_nbr="nan").order_by("-autotype")
+	totitems = backlog.objects.filter(status="Ready for development", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+	}
+	return render(request, "display/displaybacklog.html", context)
 
 
 def display(request):

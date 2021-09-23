@@ -24,8 +24,12 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('display/', views.display, name="display"),
     path('pivot/', views.pivot, name="pivot"),
+    path('backlog/', views.backlogpage, name="backlogpage"),
+    path('displaybacklog/', views.displaybacklog, name="displaybacklog"),
+
     path('pivot/orderby/', views.orderbycount, name="orderbycount"),
     path('pivot/orderbyhs/', views.orderbyhs, name="orderbyhs"),
+    
     path('filter/MC/', views.martin, name="martin"),
     path('filter/MT/', views.marek, name="marek"),
     path('filter/AC/', views.andrej, name="andrej"),
