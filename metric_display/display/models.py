@@ -28,3 +28,14 @@ class backlog(models.Model):
 
 	def __str__(self):
 		return self.title
+
+class award(models.Model):
+	quarter = models.CharField(blank=True, max_length=200)
+	developer = models.CharField(blank=True, max_length=200)
+	goalamount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
+	wizardamount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
+	totalamount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
+
+
+	def __str__(self):
+		return self.developer

@@ -1,0 +1,64 @@
+{% extends 'display/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<br>
+	<div class="mx-5">
+		<div class="card text-dark bg-light">
+			<div class="card-body">
+				<h2>Award Budget: <b class="text-danger">{{ budget }}</b></h2>
+				<h5><b class="text-primary">{{ quarter }}</b> budget: <b class="text-success">{{ budgetq }}</b></h5>
+			</div>
+		</div>
+		<br>
+		<div class="card text-dark bg-light">
+			<div class="card-header"><h5>Award Form</h5>
+			</div>
+			<div class="card-body">
+				<div class="mx-auto col-sm-2">
+					<form method="POST">{% csrf_token %}
+						{{ form.as_p }}
+						<div class="d-flex justify-content-around">
+							<button class="btn btn-secondary text-center" type="submit">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<div class="card text-dark bg-light mb-3" style="max-width: 80rem;">
+			
+				<table class="table table-borderless border-light">
+					<thead class="table-secondary">
+						<th scope="col" class="small">Developer</th>
+						<th scope="col" class="small" style="text-align:center;">Goal Award</th>
+						<th scope="col" class="small" style="text-align:center;">Wizard Award</th>
+						<th scope="col" class="small" style="text-align:center;">Total</th>
+					</thead>
+					<tbody>
+						{% for d in data %}
+							<td class="small">{{ d.developer }}</td>
+							<td class="small" style="text-align:center;">{{ d.goalamount }}</td>
+							<td class="small" style="text-align:center;">{{ d.wizardamount }}</td>
+							<td class="small" style="text-align:center;"><b class="text-success">{{ d.totalamount }}</b></td>
+					</tbody>
+						{% endfor %}
+					<tfoot class="table-secondary">
+						<th class="small">Total</th>
+						<th class="small"></th>
+						<th class="small"></th>
+						<th class="small" style="text-align:center;"><b class="alert alert-success text-success">{{ sumatotal }}</b></th>
+					</tfoot>		
+				</table>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('display/', views.display, name="display"),
     path('pivot/', views.pivot, name="pivot"),
+    path('awards/', views.awards, name="awards"),
     path('backlog/', views.backlogpage, name="backlogpage"),
     path('displaybacklog/', views.displaybacklog, name="displaybacklog"),
 
