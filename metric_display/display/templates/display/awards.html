@@ -10,8 +10,12 @@
 	<div class="mx-5">
 		<div class="card text-dark bg-light">
 			<div class="card-body">
-				<h2>Award Budget: <b class="text-danger">{{ budget }}</b></h2>
-				<h5><b class="text-primary">{{ quarter }}</b> budget: <b class="text-success">{{ budgetq }}</b></h5>
+				<h2 class="mb-3">Award Budget: <b class="text-danger">{{ budget }}</b></h2>
+				{% if budgetq < 0 %}
+					<h5><b class="text-primary">{{ quarter }}</b> budget: <b class="alert alert-danger">{{ budgetq }}</b></h5>
+				{% else %}
+					<h5><b class="text-primary">{{ quarter }}</b> budget: <b class="text-success">{{ budgetq }}</b></h5>
+				{% endif %}
 			</div>
 		</div>
 		<br>
