@@ -175,7 +175,7 @@ def pivot(request):
 	return render(request, "display/pivot.html", context)
 
 def martin(request):
-	data = metric.objects.filter(manager="Martin Campos")
+	data = metric.objects.filter(manager="Martin Campos").order_by("developer")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -186,7 +186,7 @@ def martin(request):
 	return render(request, "display/display.html", context)
 
 def marek(request):
-	data = metric.objects.filter(manager="Marek Tarkos")
+	data = metric.objects.filter(manager="Marek Tarkos").order_by("developer")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -197,7 +197,7 @@ def marek(request):
 	return render(request, "display/display.html", context)
 
 def andrej(request):
-	data = metric.objects.filter(manager="Andrej Csiaki")
+	data = metric.objects.filter(manager="Andrej Csiaki").order_by("developer")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -208,7 +208,7 @@ def andrej(request):
 	return render(request, "display/display.html", context)
 
 def francisco(request):
-	data = metric.objects.filter(manager="Francisco del Castillo")
+	data = metric.objects.filter(manager="Francisco del Castillo").order_by("developer")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
