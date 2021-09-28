@@ -100,7 +100,6 @@ def awards(request):
 	fecha = date.today()
 	mes = fecha.month
 
-
 	if mes == 1 or mes == 2 or mes == 3:
 		q = "1Q"
 	elif mes == 4 or mes == 5 or mes == 6:
@@ -112,8 +111,7 @@ def awards(request):
 
 	data = award.objects.filter(quarter=q)
 	budgetq = budget / 2
-	
-	
+		
 	if request.method =="POST":
 		form = awardform(request.POST or None)
 		if form.is_valid():
@@ -145,7 +143,6 @@ def cleanaward(request):
 	fecha = date.today()
 	mes = fecha.month
 
-
 	if mes == 1 or mes == 2 or mes == 3:
 		q = "1Q"
 	elif mes == 4 or mes == 5 or mes == 6:
@@ -163,7 +160,6 @@ def cleanaward(request):
 		totitems = award.objects.filter(quarter=q).count()
 		for i in range(totitems):
 			developer = dev_list[i]
-			print(developer)
 			award_db = award.objects.get(quarter=q,developer=developer)
 			award_db.goalamount = Decimal(0)
 			award_db.wizardamount = Decimal(0)
