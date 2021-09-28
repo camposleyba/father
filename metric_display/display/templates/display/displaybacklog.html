@@ -16,12 +16,12 @@
 						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Automation Type
 						  </button>
 							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customzied Solution</button></li></a>
+					    		<a href="{% url 'jglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
+					    		<a href="{% url 'jcglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
+					    		<a href="{% url 'jierp' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
+					    		<a href="{% url 'recon' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
+					    		<a href="{% url 'reporting' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
+					    		<a href="{% url 'customsol' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customzied Solution</button></li></a>
 							  </ul>
 						</div>
 					</div>

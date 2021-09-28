@@ -39,6 +39,13 @@ urlpatterns = [
     path('pivot/MT/', views.marekpivot, name="marekpivot"),
     path('pivot/AC/', views.andrejpivot, name="andrejpivot"),
     path('pivot/FC/', views.franciscopivot, name="franciscopivot"),
+
+    path('backlog/JG/', views.jglui, name="jglui"),
+    path('backlog/JCG/', views.jcglui, name="jcglui"),
+    path('backlog/iERP/', views.jierp, name="jierp"),
+    path('backlog/REC/', views.recon, name="recon"),
+    path('backlog/REP/', views.reporting, name="reporting"),
+    path('backlog/CS/', views.customsol, name="customsol"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

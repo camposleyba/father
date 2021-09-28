@@ -315,3 +315,57 @@ def orderbyhs(request):
 		'sumahs':sumahs
 	}
 	return render(request, "display/pivot.html", context)
+
+def jglui(request):
+	data = backlog.objects.filter(autotype="Journal - GLUI", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Journal - GLUI", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
+
+def jcglui(request):
+	data = backlog.objects.filter(autotype="Journal - CGLUI", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Journal - CGLUI", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
+
+def jierp(request):
+	data = backlog.objects.filter(autotype="Journal - iERP", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Journal - iERP", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
+
+def recon(request):
+	data = backlog.objects.filter(autotype="Reconciliation", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Reconciliation", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
+
+def reporting(request):
+	data = backlog.objects.filter(autotype="Reporting", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Reporting", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
+
+def customsol(request):
+	data = backlog.objects.filter(autotype="Customized Solution", bot_nbr="nan")
+	totitems = backlog.objects.filter(autotype="Customized Solution", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems
+	}
+	return render(request, "display/displaybacklog.html", context)
