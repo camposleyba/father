@@ -141,6 +141,36 @@ def awards(request):
 	}
 	return render(request, "display/awards.html", context)
 
+def cleanaward(request):
+	fecha = date.today()
+	mes = fecha.month
+
+
+	if mes == 1 or mes == 2 or mes == 3:
+		q = "1Q"
+	elif mes == 4 or mes == 5 or mes == 6:
+		q = "2Q"
+	elif mes == 7 or mes == 8 or mes ==9:
+		q = "3Q"
+	else:
+		q = "4Q"
+
+	dev_list = ['Pablo Iacovone','Santiago Kitashima','Martin Spadoni',
+	'Laura Bisaccia','Andres Grosman','Bruno Secchiari','Ezequiel Ferlauto',
+	'Florencia Castelvero','Dario Atach']
+
+	if request.method == "POST":
+		totitems = award.objects.filter(quarter=q).count()
+		for i in range(totitems):
+			developer = dev_list[i]
+			print(developer)
+			award_db = award.objects.get(quarter=q,developer=developer)
+			award_db.goalamount = Decimal(0)
+			award_db.wizardamount = Decimal(0)
+			award_db.totalamount = Decimal(0)
+			award_db.save()
+
+	return redirect('awards')
 
 
 def displaybacklog(request):
