@@ -10,7 +10,7 @@
 	<div class="mx-5">
 		<div class="card text-dark bg-light">
 			<div class="card-body">
-				<h2 class="mb-3">Award Budget: <b class="text-danger">{{ budget }}</b></h2>
+				<h3 class="mb-3">Award Budget: <b class="text-danger">{{ budget }}</b></h3>
 				{% if budgetq < 0 %}
 					<h5><b class="text-primary">{{ quarter }}</b> budget: <b class="alert alert-danger">{{ budgetq }}</b></h5>
 				{% else %}
@@ -19,15 +19,15 @@
 			</div>
 		</div>
 		<br>
-		<div class="card text-dark bg-light">
-			<div class="card-header"><h5>Award Form</h5>
+		<div class="mx-auto card text-dark bg-light" style="max-width: 67rem;">
+			<div class="card-header"><h5 class="lead">Award Form</h5>
 			</div>
 			<div class="card-body">
 				<div class="mx-auto col-sm-2">
 					<form method="POST">{% csrf_token %}
 						{{ form.as_p }}
 						<div class="d-flex justify-content-around">
-							<button class="btn btn-secondary text-center" type="submit">Submit</button>
+							<button class="btn btn-secondary" type="submit">Submit</button>
 						</div>
 					</form>
 				</div>
