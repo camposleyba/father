@@ -101,7 +101,6 @@ def awards(request):
 	mes = fecha.month
 
 
-
 	if mes == 1 or mes == 2 or mes == 3:
 		q = "1Q"
 	elif mes == 4 or mes == 5 or mes == 6:
@@ -141,6 +140,8 @@ def awards(request):
 		'sumatotal':sumatotal
 	}
 	return render(request, "display/awards.html", context)
+
+
 
 def displaybacklog(request):
 	data = backlog.objects.filter(status="Ready for development", bot_nbr="nan").order_by("-autotype")
