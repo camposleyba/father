@@ -109,7 +109,7 @@ def awards(request):
 	else:
 		q = "4Q"
 
-	data = award.objects.filter(quarter=q)
+	data = award.objects.filter(quarter=q).order_by("-totalamount")
 	budgetq = budget / 2
 		
 	if request.method =="POST":
