@@ -9,7 +9,7 @@
 <br>
 	<div class="mx-5">
 		<div class="row">
-		<div class="mx-auto card text-dark bg-light" style="max-width: 16rem;">
+		<div class="mx-auto card text-dark bg-light" style="max-width: 40rem;">
 			<div class="card-header"><h4>Award Budget: </h4><h4 class="text-danger">{{ budget }}</h4></div>
 			<div class="card-body">
 				{% if budgetq < 0 %}
@@ -19,26 +19,12 @@
 				{% endif %}
 			</div>
 		</div>
-		<br>
-		<div class="mx-auto card text-dark bg-light" style="max-width: 55rem;">
-			<div class="card-header"><h5 class="lead">Award Form</h5></div>
-			<div class="card-body">
-				<div class="mx-auto col-sm-3">
-					<form method="POST">{% csrf_token %}
-						{{ form.as_p }}
-						<div class="d-flex justify-content-around">
-							<button class="btn btn-secondary" type="submit">Submit</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 		</div>
 		<br>
 		<div class="mx-auto card text-dark bg-light">
 			<div class="card-body">
 				<div class="d-flex justify-content-around-start">
-					<form method="POST" action="{% url 'cleanaward' %}">{% csrf_token %}
+					<form method="POST" action="#">{% csrf_token %}
 						<button class="ms-2 btn btn-secondary btn-sm" type="submit">Clean Table</button>
 					</form>
 					<div class="dropdown">

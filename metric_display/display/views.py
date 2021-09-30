@@ -95,25 +95,27 @@ def backlogpage(request):
 	return render(request, 'display/backlog.html', context)
 
 def awards(request):
-	budget = Decimal(1670)
 
 	fecha = date.today()
 	mes = fecha.month
 
 	if mes == 1 or mes == 2 or mes == 3:
 		q = "1Q"
+		budget = Decimal(2070)
+		budgetq = Decimal(300)
 	elif mes == 4 or mes == 5 or mes == 6:
 		q = "2Q"
+		budget = Decimal(1770)
+		budgetq = Decimal(100)
 	elif mes == 7 or mes == 8 or mes ==9:
 		q = "3Q"
+		budget = Decimal(1670)
+		budgetq = Decimal(835)
 	else:
 		q = "4Q"
-
-	if q == "4Q":
 		budget = Decimal(840)
 		budgetq = budget
-	else:
-		budgetq = budget / 2
+
 
 	data = award.objects.filter(quarter=q).order_by("-totalamount")
 	
@@ -173,6 +175,100 @@ def cleanaward(request):
 			award_db.save()
 
 	return redirect('awards')
+
+def q1view(request):
+	data = award.objects.filter(quarter="1Q").order_by("-totalamount")
+	
+	form = awardform()
+
+	q="1Q"
+	budget = Decimal(2070)
+	budgetq = Decimal(300)
+	
+	sumatotal = sum(data.values_list('totalamount', flat=True))
+	awardbudget = budget - sumatotal
+	budgetq = budgetq - sumatotal
+
+	context={
+		'budget':awardbudget,
+		'form':form,
+		'quarter':q,
+		'budgetq':budgetq,
+		'data':data,
+		'sumatotal':sumatotal
+	}
+	return render(request, 'display/awards1q.html', context)
+
+
+def q2view(request):
+	data = award.objects.filter(quarter="2Q").order_by("-totalamount")
+	
+	form = awardform()
+	q="2Q"
+	budget = Decimal(1770)
+	budgetq = Decimal(100)
+	
+	sumatotal = sum(data.values_list('totalamount', flat=True))
+	awardbudget = budget - sumatotal
+	budgetq = budgetq - sumatotal
+
+	context={
+		'budget':awardbudget,
+		'form':form,
+		'quarter':q,
+		'budgetq':budgetq,
+		'data':data,
+		'sumatotal':sumatotal
+	}
+	return render(request, 'display/awards2q.html', context)
+
+
+def q3view(request):
+	data = award.objects.filter(quarter="3Q").order_by("-totalamount")
+	
+	form = awardform()
+	q="3Q"
+	budget = Decimal(1670)
+	budgetq = Decimal(830)
+	
+	sumatotal = sum(data.values_list('totalamount', flat=True))
+	awardbudget = budget - sumatotal
+	budgetq = budgetq - sumatotal
+
+	context={
+		'budget':awardbudget,
+		'form':form,
+		'quarter':q,
+		'budgetq':budgetq,
+		'data':data,
+		'sumatotal':sumatotal
+	}
+	return render(request, 'display/awards3q.html', context)
+
+
+def q4view(request):
+	data = award.objects.filter(quarter="4Q").order_by("-totalamount")
+	
+	form = awardform()
+	q="4Q"
+	budget = Decimal(840)
+	budgetq = Decimal(840)
+	
+	sumatotal = sum(data.values_list('totalamount', flat=True))
+	awardbudget = budget - sumatotal
+	budgetq = budgetq - sumatotal
+
+	context={
+		'budget':awardbudget,
+		'form':form,
+		'quarter':q,
+		'budgetq':budgetq,
+		'data':data,
+		'sumatotal':sumatotal
+	}
+	return render(request, 'display/awards4q.html', context)
+
+
 
 
 def displaybacklog(request):

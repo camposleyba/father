@@ -29,6 +29,11 @@ urlpatterns = [
     path('backlog/', views.backlogpage, name="backlogpage"),
     path('displaybacklog/', views.displaybacklog, name="displaybacklog"),
 
+    path('awards/1Q/', views.q1view, name="q1view"),
+    path('awards/2Q/', views.q2view, name="q2view"),
+    path('awards/3Q/', views.q3view, name="q3view"),
+    path('awards/4Q/', views.q4view, name="q4view"),
+
     path('pivot/orderby/', views.orderbycount, name="orderbycount"),
     path('pivot/orderbyhs/', views.orderbyhs, name="orderbyhs"),
     
