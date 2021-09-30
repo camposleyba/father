@@ -110,7 +110,7 @@ def awards(request):
 	elif mes == 7 or mes == 8 or mes ==9:
 		q = "3Q"
 		budget = Decimal(1670)
-		budgetq = Decimal(835)
+		budgetq = Decimal(830)
 	else:
 		q = "4Q"
 		budget = Decimal(840)
