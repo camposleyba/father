@@ -109,8 +109,14 @@ def awards(request):
 	else:
 		q = "4Q"
 
+	if q == "4Q":
+		budget = Decimal(840)
+		budgetq = budget
+	else:
+		budgetq = budget / 2
+
 	data = award.objects.filter(quarter=q).order_by("-totalamount")
-	budgetq = budget / 2
+	
 		
 	if request.method =="POST":
 		form = awardform(request.POST or None)
@@ -246,7 +252,7 @@ def francisco(request):
 	return render(request, "display/display.html", context)
 
 def martinpivot(request):
-	data = metricpivot.objects.filter(manager="Martin Campos")
+	data = metricpivot.objects.filter(manager="Martin Campos").order_by("-tot_bots")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -257,7 +263,7 @@ def martinpivot(request):
 	return render(request, "display/pivot.html", context)
 
 def marekpivot(request):
-	data = metricpivot.objects.filter(manager="Marek Tarkos")
+	data = metricpivot.objects.filter(manager="Marek Tarkos").order_by("-tot_bots")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -268,7 +274,7 @@ def marekpivot(request):
 	return render(request, "display/pivot.html", context)
 
 def andrejpivot(request):
-	data = metricpivot.objects.filter(manager="Andrej Csiaki")
+	data = metricpivot.objects.filter(manager="Andrej Csiaki").order_by("-tot_bots")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -279,7 +285,7 @@ def andrejpivot(request):
 	return render(request, "display/pivot.html", context)
 
 def franciscopivot(request):
-	data = metricpivot.objects.filter(manager="Francisco del Castillo")
+	data = metricpivot.objects.filter(manager="Francisco del Castillo").order_by("-tot_bots")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
