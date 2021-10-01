@@ -5,6 +5,7 @@ import pandas as pd
 from django.db.models import Sum
 from datetime import date
 from decimal import *
+from datetime import date
 
 #def handle_uploaded_file(f):
 #	with open("C:/Users/016434613/Dev/metric_display/display/file.xlsm",'wb+') as destination:
@@ -272,11 +273,13 @@ def q4view(request):
 
 
 def displaybacklog(request):
+	hoy = date.today()
 	data = backlog.objects.filter(status="Ready for development", bot_nbr="nan").order_by("-autotype")
 	totitems = backlog.objects.filter(status="Ready for development", bot_nbr="nan").count()
 	context = {
 		'data':data,
 		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
@@ -446,55 +449,67 @@ def orderbyhs(request):
 	return render(request, "display/pivot.html", context)
 
 def jglui(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Journal - GLUI", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Journal - GLUI", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
 def jcglui(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Journal - CGLUI", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Journal - CGLUI", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
 def jierp(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Journal - iERP", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Journal - iERP", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
 def recon(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Reconciliation", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Reconciliation", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
 def reporting(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Reporting", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Reporting", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
 
 def customsol(request):
+	hoy = date.today()
 	data = backlog.objects.filter(autotype="Customized Solution", bot_nbr="nan")
 	totitems = backlog.objects.filter(autotype="Customized Solution", bot_nbr="nan").count()
 	context = {
 		'data':data,
-		'totitems':totitems
+		'totitems':totitems,
+		'fecha':hoy
 	}
 	return render(request, "display/displaybacklog.html", context)
