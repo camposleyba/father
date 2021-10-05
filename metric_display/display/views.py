@@ -28,8 +28,8 @@ def home(request):
 				db_metric.manager = file["MANAGER"][i]
 				db_metric.developer = file["DEVELOPERS"][i]
 				db_metric.bot_nbr = file["ROBOT NBR"][i]
-				db_metric.tot_bots = file["COUNT"][i]
-				db_metric.tot_hours = file["HS"][i]
+				db_metric.tot_bots = int(file["COUNT"][i])
+				db_metric.tot_hours = Decimal(file["HS"][i].item())
 				db_metric.save()
 
 			file_ = pd.read_excel(request.FILES['inputfile'],sheet_name="Pivotmetricdisplay")
@@ -40,8 +40,8 @@ def home(request):
 				db_metric_ = metricpivot()
 				db_metric_.manager = file_["MANAGER"][i]
 				db_metric_.developer = file_["DEVELOPERS"][i]
-				db_metric_.tot_bots = file_["ROBOT NUMBER"][i]
-				db_metric_.tot_hours = file_["HS SAVED"][i]
+				db_metric_.tot_bots = Decimal(file_["ROBOT NUMBER"][i].item())
+				db_metric_.tot_hours = Decimal(file_["HS SAVED"][i].item())
 				db_metric_.save()
 
 
