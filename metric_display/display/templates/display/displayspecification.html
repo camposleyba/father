@@ -1,0 +1,86 @@
+{% extends 'display/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<br>
+	<div class="mx-5">
+		<div class="mx-auto card text-dark bg-light text-center" style="max-width: 30rem;">
+			<div class="card-body">
+				<h3>Specification PDDs:  
+					<small class="text-muted">{{ fecha|date:"d M y"}}</small>
+				</h3>
+			</div>
+		</div>
+		<br>
+		<div class="card text-dark bg-light">
+			<div class="card-body">
+					<div class="d-flex justify-content-start">
+						<div class="dropdown">
+						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Automation Type
+						  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customized Solution</button></li></a>
+							  </ul>
+						</div>
+						<div class="ms-2 dropdown">
+						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Regions
+						  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS, AP, EMEA, JP</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP, JP</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP</button></li></a>
+					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">EMEA</button></li></a>
+							  </ul>
+						</div>
+					</div>
+			</div>
+		</div>
+
+		<br>
+		<div class="card text-dark bg-light mb-3" style="max-width: 80rem;">
+			
+				<table class="table table-borderless border-light table-hover">
+					<thead class="table-secondary">
+						<th scope="col" class="small">Status</th>
+						<th scope="col" class="small">DSL</th>
+						<th scope="col" class="small">Bot#</th>
+						<th scope="col" class="small">Title</th>
+						<th scope="col" class="small">Autotype</th>
+						<th scope="col" class="small">Regions</th>
+					</thead>
+					<tbody>
+						{% for d in data %}
+						<td class="small text-muted">{{d.status}}</td>
+						<td class="small">{{d.dsl}}</td>
+						<td class="small">{{d.bot_nbr}}</td>
+						<td class="small">{{d.title}}</td>
+						<td class="small">{{d.autotype}}</td>
+						<td class="small">{{d.region}}</td>
+					</tbody>
+						{% endfor %}
+					<tfoot class="table-secondary">
+						<th class="small">Total</th>
+						<th class="small"></th>
+						<th class="small"></th>
+						<th class="small"></th>
+						<th class="small"></th>
+						<th class="small" style="text-align:right;">{{ totitems }}</th>
+					</tfoot>		
+				</table>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -9,6 +9,24 @@ class inputf(forms.Form):
         )
     )
 
+class inputfspec(forms.Form):
+    inputfile = forms.FileField(label="",
+         widget=forms.FileInput(
+            attrs={
+                'class':'form-control'
+            }
+        )
+    )
+
+class inputfval(forms.Form):
+    inputfile = forms.FileField(label="",
+         widget=forms.FileInput(
+            attrs={
+                'class':'form-control'
+            }
+        )
+    )
+
 class awardform(forms.Form):
     choices=[('Pablo Iacovone','Pablo Iacovone'),
     ('Santiago Kitashima','Santiago Kitashima'),

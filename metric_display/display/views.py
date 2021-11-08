@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import *
-from .models import metric, metricpivot, backlog, award
+from .models import metric, metricpivot, backlog, award, specification, validation
 import pandas as pd
 from django.db.models import Sum
 from datetime import date
@@ -94,6 +94,78 @@ def backlogpage(request):
 		}
 
 	return render(request, 'display/backlog.html', context)
+
+def validationpage(request):
+	if request.method == "POST":
+		input_form = inputfval(request.POST, request.FILES)
+
+		if input_form.is_valid():
+			#handle_uploaded_file(request.FILES['inputfile'])
+			file = pd.read_excel(request.FILES['inputfile'],sheet_name="vld")
+
+			#-- Start by clearing the database
+			validation.objects.all().delete()
+			
+			for i in range(file["STATUS"].size):
+				db_vald = validation()
+				db_vald.dsl = file["DSL"][i]
+				db_vald.status = file["STATUS"][i]
+				db_vald.bot_nbr = file["ROBOT NUMBER"][i]
+				db_vald.title = file["TITLE"][i]
+				db_vald.autotype = file["AUTOMATION TYPE"][i]
+				db_vald.region = file["REGIONS"][i]
+				db_vald.save()
+		
+		context = {
+			'form':input_form
+		}
+
+		return redirect('displayvalidation')
+
+
+	else:
+		input_form = inputfval(request.POST or None)
+		context = {
+			'form':input_form,
+		}
+
+	return render(request, 'display/validation.html', context)
+
+def specificationpage(request):
+	if request.method == "POST":
+		input_form = inputfspec(request.POST, request.FILES)
+
+		if input_form.is_valid():
+			#handle_uploaded_file(request.FILES['inputfile'])
+			file = pd.read_excel(request.FILES['inputfile'],sheet_name="spf")
+
+			#-- Start by clearing the database
+			specification.objects.all().delete()
+			
+			for i in range(file["STATUS"].size):
+				db_spec = specification()
+				db_spec.dsl = file["DSL"][i]
+				db_spec.status = file["STATUS"][i]
+				db_spec.bot_nbr = file["ROBOT NUMBER"][i]
+				db_spec.title = file["TITLE"][i]
+				db_spec.autotype = file["AUTOMATION TYPE"][i]
+				db_spec.region = file["REGIONS"][i]
+				db_spec.save()
+		
+		context = {
+			'form':input_form
+		}
+
+		return redirect('displayspecification')
+
+
+	else:
+		input_form = inputfspec(request.POST or None)
+		context = {
+			'form':input_form,
+		}
+
+	return render(request, 'display/specification.html', context)
 
 def awards(request):
 
@@ -283,6 +355,82 @@ def displaybacklog(request):
 	}
 	return render(request, "display/displaybacklog.html", context)
 
+def displayspecification(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayvalidation(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationamerica(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", region="AMERICAS").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", region="AMERICAS").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationamapemjp(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", region="AMERICAS, AP, EMEA, JP").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", region="AMERICAS, AP, EMEA, JP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationemea(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", region="EMEA").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", region="EMEA").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationap(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", region="AP").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", region="AP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationapjp(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", region="AP, JP").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", region="AP, JP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
 
 def display(request):
 	data = metric.objects.all()

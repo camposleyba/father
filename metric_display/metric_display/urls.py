@@ -28,6 +28,18 @@ urlpatterns = [
     path('awards/CL/', views.cleanaward, name="cleanaward"),
     path('backlog/', views.backlogpage, name="backlogpage"),
     path('displaybacklog/', views.displaybacklog, name="displaybacklog"),
+    path('validation/', views.validationpage, name="validation"),
+    path('displayvalidation/', views.displayvalidation, name="displayvalidation"),
+    path('specification/', views.specificationpage, name="specification"),
+    path('displayspecification/', views.displayspecification, name="displayspecification"),
+
+    path('displayvalidation/AMERICAS/', views.displayvalidationamerica, name="displayvalidationamerica"),
+    path('displayvalidation/AMAPEMJP/', views.displayvalidationamapemjp, name="displayvalidationamapemjp"),
+    path('displayvalidation/EMEA/', views.displayvalidationemea, name="displayvalidationemea"),
+    path('displayvalidation/AP/', views.displayvalidationap, name="displayvalidationap"),
+    path('displayvalidation/APJP/', views.displayvalidationapjp, name="displayvalidationapjp"),
+    
+    
 
     path('awards/1Q/', views.q1view, name="q1view"),
     path('awards/2Q/', views.q2view, name="q2view"),

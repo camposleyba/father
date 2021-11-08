@@ -29,6 +29,28 @@ class backlog(models.Model):
 	def __str__(self):
 		return self.title
 
+class specification(models.Model):
+	status = models.CharField(blank=True, max_length=200)
+	dsl = models.CharField(blank=True, max_length=200)
+	bot_nbr = models.CharField(blank=True, max_length=200)
+	title = models.CharField(blank=True, max_length=200)
+	autotype = models.CharField(blank=True, max_length=200)
+	region = models.CharField(blank=True, max_length=200)
+
+	def __str__(self):
+		return self.title
+
+class validation(models.Model):
+	status = models.CharField(blank=True, max_length=200)
+	dsl = models.CharField(blank=True, max_length=200)
+	bot_nbr = models.CharField(blank=True, max_length=200)
+	title = models.CharField(blank=True, max_length=200)
+	autotype = models.CharField(blank=True, max_length=200)
+	region = models.CharField(blank=True, max_length=200)
+
+	def __str__(self):
+		return self.title
+
 class award(models.Model):
 	quarter = models.CharField(blank=True, max_length=200)
 	developer = models.CharField(blank=True, max_length=200)
