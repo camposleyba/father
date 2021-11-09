@@ -23,23 +23,23 @@
 						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Automation Type
 						  </button>
 							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customized Solution</button></li></a>
+					    		<a href="{% url 'displayspecificationjglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
+					    		<a href="{% url 'displayspecificationcglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
+					    		<a href="{% url 'displayspecificationierp' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
+					    		<a href="{% url 'displayspecificationrecon' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
+					    		<a href="{% url 'displayspecificationreporting' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
+					    		<a href="{% url 'displayspecificationcustom' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customized Solution</button></li></a>
 							  </ul>
 						</div>
 						<div class="ms-2 dropdown">
 						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Regions
 						  </button>
 							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS, AP, EMEA, JP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP, JP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">EMEA</button></li></a>
+					    		<a href="{% url 'displayspecificationamerica' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS</button></li></a>
+					    		<a href="{% url 'displayspecificationamapemjp' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AMERICAS, AP, EMEA, JP</button></li></a>
+					    		<a href="{% url 'displayspecificationapjp' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP, JP</button></li></a>
+					    		<a href="{% url 'displayspecificationap' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">AP</button></li></a>
+					    		<a href="{% url 'displayspecificationemea' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">EMEA</button></li></a>
 							  </ul>
 						</div>
 					</div>

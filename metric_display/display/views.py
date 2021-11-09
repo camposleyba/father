@@ -432,6 +432,199 @@ def displayvalidationapjp(request):
 	}
 	return render(request, "display/displayvalidation.html", context)
 
+def displayvalidationjournalglui(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - GLUI").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - GLUI").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationcglui(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - CGLUI").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - CGLUI").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationierp(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - iERP").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Journal - iERP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationrecon(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Reconciliation").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Reconciliation").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayvalidationreporting(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Reporting").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Reporting").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+
+def displayvalidationcustom(request):
+	hoy = date.today()
+	data = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Customized Solution").order_by("-autotype")
+	totitems = validation.objects.filter(status="Validation", bot_nbr="nan", autotype="Customized Solution").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayvalidation.html", context)
+
+def displayspecificationamerica(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", region="AMERICAS").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", region="AMERICAS").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationamapemjp(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", region="AMERICAS, AP, EMEA, JP").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", region="AMERICAS, AP, EMEA, JP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationapjp(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", region="AP, JP").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", region="AP, JP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationap(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", region="AP").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", region="AP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationemea(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", region="EMEA").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", region="EMEA").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+
+def displayspecificationjglui(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - GLUI").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - GLUI").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationcglui(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - CGLUI").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - CGLUI").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+
+def displayspecificationierp(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - iERP").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Journal - iERP").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+
+def displayspecificationrecon(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Reconciliation").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Reconciliation").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+
+def displayspecificationreporting(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Reporting").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Reporting").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+def displayspecificationcustom(request):
+	hoy = date.today()
+	data = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Customized Solution").order_by("-autotype")
+	totitems = specification.objects.filter(status="Specification", bot_nbr="nan", autotype="Customized Solution").count()
+	context = {
+		'data':data,
+		'totitems':totitems,
+		'fecha':hoy
+	}
+	return render(request, "display/displayspecification.html", context)
+
+
 def display(request):
 	data = metric.objects.all()
 	sumabots = sum(data.values_list('tot_bots', flat=True))

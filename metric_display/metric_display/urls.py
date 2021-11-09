@@ -38,8 +38,28 @@ urlpatterns = [
     path('displayvalidation/EMEA/', views.displayvalidationemea, name="displayvalidationemea"),
     path('displayvalidation/AP/', views.displayvalidationap, name="displayvalidationap"),
     path('displayvalidation/APJP/', views.displayvalidationapjp, name="displayvalidationapjp"),
+
+    path('displayspecification/AMERICAS/', views.displayspecificationamerica, name="displayspecificationamerica"),
+    path('displayspecification/AMAPEMJP/', views.displayspecificationamapemjp, name="displayspecificationamapemjp"),
+    path('displayspecification/APJP/', views.displayspecificationapjp, name="displayspecificationapjp"),
+    path('displayspecification/AP/', views.displayspecificationap, name="displayspecificationap"),
+    path('displayspecification/EMEA/', views.displayspecificationemea, name="displayspecificationemea"),
+
+    path('displayvalidation/autotype/JGLUI/', views.displayvalidationjournalglui, name="displayvalidationjournalglui"),
+    path('displayvalidation/autotype/CGLUI/', views.displayvalidationcglui, name="displayvalidationcglui"),
+    path('displayvalidation/autotype/iERP/', views.displayvalidationierp, name="displayvalidationierp"),
+    path('displayvalidation/autotype/Recon/', views.displayvalidationrecon, name="displayvalidationrecon"),
+    path('displayvalidation/autotype/Reporting/', views.displayvalidationreporting, name="displayvalidationreporting"),
+    path('displayvalidation/autotype/CustomSol/', views.displayvalidationcustom, name="displayvalidationcustom"),
+
+    path('displayspecification/autotype/JGLUI/', views.displayspecificationjglui, name="displayspecificationjglui"),
+    path('displayspecification/autotype/CGLUI/', views.displayspecificationcglui, name="displayspecificationcglui"),
+    path('displayspecification/autotype/iERP/', views.displayspecificationierp, name="displayspecificationierp"),
+    path('displayspecification/autotype/Recon/', views.displayspecificationrecon, name="displayspecificationrecon"),
+    path('displayspecification/autotype/Reporting/', views.displayspecificationreporting, name="displayspecificationreporting"),
+    path('displayspecification/autotype/CustomSol/', views.displayspecificationcustom, name="displayspecificationcustom"),
     
-    
+        
 
     path('awards/1Q/', views.q1view, name="q1view"),
     path('awards/2Q/', views.q2view, name="q2view"),

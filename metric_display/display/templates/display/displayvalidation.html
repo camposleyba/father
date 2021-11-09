@@ -23,12 +23,12 @@
 						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Automation Type
 						  </button>
 							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
-					    		<a href="#" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customized Solution</button></li></a>
+					    		<a href="{% url 'displayvalidationjournalglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - GLUI</button></li></a>
+					    		<a href="{% url 'displayvalidationcglui' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - CGLUI</button></li></a>
+					    		<a href="{% url 'displayvalidationierp' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Journal - iERP</button></li></a>
+					    		<a href="{% url 'displayvalidationrecon' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reconciliation</button></li></a>
+					    		<a href="{% url 'displayvalidationreporting' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Reporting</button></li></a>
+					    		<a href="{% url 'displayvalidationcustom' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">Customized Solution</button></li></a>
 							  </ul>
 						</div>
 						<div class="ms-2 dropdown">
