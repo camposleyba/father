@@ -27,3 +27,9 @@ def search_magnetLink(l):
     posfin = sear.span()[1]
     link_ = datos_[6:posfin-10]
     return link_
+
+def search_torrentLink(l):
+    request = Request("https://1337x.to/"+l, headers={'User-Agent': 'Mozilla/5.0'})
+    web = urlopen(request)
+    datos = web.read().decode()
+    return datos
