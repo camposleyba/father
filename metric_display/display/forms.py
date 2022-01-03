@@ -36,7 +36,8 @@ class awardform(forms.Form):
     ('Andres Grosman' ,'Andres Grosman'),
     ('Laura Bisaccia' ,'Laura Bisaccia'),
     ('Dario Atach','Dario Atach'),
-    ('Martin Spadoni' ,'Martin Spadoni')]
+    ('Martin Spadoni' ,'Martin Spadoni'),
+    ('Martin Williner' ,'Martin Williner')]
 
     choiceaward = forms.ChoiceField(label="",choices=choices, 
         widget=forms.Select(
