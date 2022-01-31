@@ -174,19 +174,19 @@ def awards(request):
 
 	if mes == 1 or mes == 2 or mes == 3:
 		q = "1Q"
-		budget = Decimal(2070)
-		budgetq = Decimal(300)
+		budget = Decimal(4000)
+		budgetq = Decimal(1000)
 	elif mes == 4 or mes == 5 or mes == 6:
 		q = "2Q"
-		budget = Decimal(1770)
-		budgetq = Decimal(100)
+		budget = Decimal(3000)
+		budgetq = Decimal(1000)
 	elif mes == 7 or mes == 8 or mes ==9:
 		q = "3Q"
-		budget = Decimal(1670)
-		budgetq = Decimal(830)
+		budget = Decimal(2000)
+		budgetq = Decimal(1000)
 	else:
 		q = "4Q"
-		budget = Decimal(840)
+		budget = Decimal(1000)
 		budgetq = budget
 
 
@@ -233,9 +233,10 @@ def cleanaward(request):
 	else:
 		q = "4Q"
 
+
 	dev_list = ['Pablo Iacovone','Santiago Kitashima','Martin Spadoni',
 	'Laura Bisaccia','Andres Grosman','Bruno Secchiari','Ezequiel Ferlauto',
-	'Florencia Castelvero','Dario Atach']
+	'Dario Atach','Martin Williner','Martin Laguna']
 
 	if request.method == "POST":
 		totitems = award.objects.filter(quarter=q).count()
@@ -255,8 +256,8 @@ def q1view(request):
 	form = awardform()
 
 	q="1Q"
-	budget = Decimal(2070)
-	budgetq = Decimal(300)
+	budget = Decimal(4000)
+	budgetq = Decimal(1000)
 	
 	sumatotal = sum(data.values_list('totalamount', flat=True))
 	awardbudget = budget - sumatotal
@@ -278,8 +279,8 @@ def q2view(request):
 	
 	form = awardform()
 	q="2Q"
-	budget = Decimal(1770)
-	budgetq = Decimal(100)
+	budget = Decimal(3000)
+	budgetq = Decimal(1000)
 	
 	sumatotal = sum(data.values_list('totalamount', flat=True))
 	awardbudget = budget - sumatotal
@@ -301,8 +302,8 @@ def q3view(request):
 	
 	form = awardform()
 	q="3Q"
-	budget = Decimal(1670)
-	budgetq = Decimal(830)
+	budget = Decimal(2000)
+	budgetq = Decimal(1000)
 	
 	sumatotal = sum(data.values_list('totalamount', flat=True))
 	awardbudget = budget - sumatotal
@@ -324,8 +325,8 @@ def q4view(request):
 	
 	form = awardform()
 	q="4Q"
-	budget = Decimal(840)
-	budgetq = Decimal(840)
+	budget = Decimal(1000)
+	budgetq = Decimal(1000)
 	
 	sumatotal = sum(data.values_list('totalamount', flat=True))
 	awardbudget = budget - sumatotal
@@ -681,7 +682,7 @@ def andrej(request):
 	return render(request, "display/display.html", context)
 
 def francisco(request):
-	data = metric.objects.filter(manager="Francisco del Castillo").order_by("developer")
+	data = metric.objects.filter(manager="Melissa Bledsoe").order_by("developer")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -725,7 +726,7 @@ def andrejpivot(request):
 	return render(request, "display/pivot.html", context)
 
 def franciscopivot(request):
-	data = metricpivot.objects.filter(manager="Francisco del Castillo").order_by("-tot_bots")
+	data = metricpivot.objects.filter(manager="Melissa Bledsoe").order_by("-tot_bots")
 	sumabots = sum(data.values_list('tot_bots', flat=True))
 	sumahs = sum(data.values_list('tot_hours', flat=True))
 	context = {
@@ -749,7 +750,7 @@ def orderbycount(request):
 		mgr="Andrej Csiaki"
 		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
 	elif direlist[4] == "FC":
-		mgr="Francisco del Castillo"
+		mgr="Melissa Bledsoe"
 		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_bots")
 	else:
 		data = metricpivot.objects.all().order_by("-tot_bots")
@@ -776,7 +777,7 @@ def orderbyhs(request):
 		mgr="Andrej Csiaki"
 		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
 	elif direlist[4] == "FC":
-		mgr="Francisco del Castillo"
+		mgr="Melissa Bledsoe"
 		data = metricpivot.objects.filter(manager=mgr).order_by("-tot_hours")
 	else:
 		data = metricpivot.objects.all().order_by("-tot_hours")
