@@ -1,6 +1,6 @@
 import ibm_db
 
-conn=ibm_db.connect("DRIVER={IBM DB2 ODBC DRIVER};DATABASE=DP1H;HOSTNAME=usibmvrdp1h.ssiplex.pok.ibm.com;PORT=5520;UID=ar16434;PWD=No_tengocovid23",'','')
+conn=ibm_db.connect("DSN=DP1H",'','')
 
 sql = "select cty, lc,maj,minor,smin,amtloc from lrpcc.ladetail_cm_d where cty='613'"
 stmt = ibm_db.exec_immediate(conn, sql)
