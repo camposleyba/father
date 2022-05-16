@@ -457,6 +457,8 @@ def dev_over90():
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA147",'DEVELOPERS']="Ezequiel Ferlauto"
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Santiago Kitashima",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA135",'Manager']="Martin Campos"
 
 
     df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)

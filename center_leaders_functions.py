@@ -22,7 +22,10 @@ def centerLead(cnum, clname, loc):
 	    reportserial.append(r['uid'])
 	    isMgr.append(r['isManager'])
 	    emp_type.append(r['employeeType']['title'])
-	    role.append(r['role'])
+	    try:
+	    	role.append(r['role'])
+	    except:
+	    	role.append('')
 	    if clname == "Francisco del Castillo":
 	    	try:
 	    		l=r['address']['business']['locality']
@@ -37,7 +40,10 @@ def centerLead(cnum, clname, loc):
 	    	locality.append(loc)
 	    else:
 	    	locality.append(loc)
-	    identity.append(r['preferredIdentity'])
+	    try:
+	    	identity.append(r['preferredIdentity'])
+	    except:
+	    	identity.append('')
 
 	df_cl = pd.DataFrame(reportnames, columns=['Reports'])
 	df_cl['Serials'] = reportserial
