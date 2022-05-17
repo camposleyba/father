@@ -6,6 +6,7 @@ import os
 from urllib import request as req
 import json
 import time
+import pickle
 
 filepath_= r"C:\Users\016434613\Downloads\progress_dt_tasks_details_report.xlsx"
 
@@ -690,6 +691,9 @@ def ideas():
     df_Ideas.to_excel(r"C:\Users\016434613\Desktop\Ideas.xlsx", index=False)
 
 def update_specification():
+    with open('w3id_credentials','rb') as f:
+        cred = pickle.load(f)
+
     filepath_=r"C:\Users\016434613\Desktop\Specification.xlsx"
     timeelem_list = []
     df_Spec = pd.read_excel(filepath_,sheet_name="Sheet1")
@@ -701,9 +705,9 @@ def update_specification():
     w3id = mydriver.find_element_by_xpath('//*[@id="credsDiv"]/label')
     w3id.click()
     user = mydriver.find_element_by_xpath('//*[@id="user-name-input"]')
-    user.send_keys('marcamp@ar.ibm.com')
+    user.send_keys(cred['user'])
     psw = mydriver.find_element_by_xpath('//*[@id="password-input"]')
-    psw.send_keys('MyNporsiempre2026.')
+    psw.send_keys(cred['psw'])
     button = mydriver.find_element_by_xpath('//*[@id="login-button"]')
     button.click()
     time.sleep(15)
