@@ -2,6 +2,9 @@ import pandas as pd
 import re
 import subprocess
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import os
 from urllib import request as req
 import json
@@ -459,7 +462,12 @@ def dev_over90():
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
     df_Merge.loc[df_Merge['DEVELOPERS']=="Santiago Kitashima",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Maria Laura Bisaccia",'Manager']="Martin Campos"
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA135",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA111",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA128",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA146",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA147",'Manager']="Martin Campos"
 
 
     df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)
@@ -712,9 +720,12 @@ def update_specification():
     button.click()
     time.sleep(15)
 
+
     for item_ in list_:
         mydriver.get("https://progress.us1a.cirrus.ibm.com/digital-transformation/task/"+item_)
-        time.sleep(12)
+        wait = WebDriverWait(mydriver, 12)
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="container-3"]/div[1]/app-task-preview/div/div/task-preview-header/div/div[2]/div[2]/div[2]/button/span[1]/mat-icon')))
+        #time.sleep(12)
         try:
             timeelem = mydriver.find_elements_by_xpath('//*[@id="container-3"]/div[1]/app-task-preview/div/div/task-preview-header/div/div[2]/div[2]/div[1]/div[2]/div/span[2]')
             timeelem_list.append(timeelem[0].get_attribute("textContent"))
