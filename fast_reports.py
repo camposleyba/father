@@ -13,6 +13,27 @@ import pickle
 
 filepath_= r"C:\Users\016434613\Downloads\progress_dt_tasks_details_report.xlsx"
 
+def download_tasks():
+    checkfilepath = r"C:\Users\016434613\Downloads\progress_dt_tasks_details_report.xlsx"
+    exists = False
+
+    ''' This sentence takes care of deleting old tasks report on downloads folder '''
+    subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_details_report.xlsx", shell=True, capture_output=True)
+
+    ''' Creating the driver conection to handle automatic session with Selenium '''
+    mydriver = webdriver.Chrome("chromedriver.exe")
+
+    ''' automatically opening the above created session with the link in between parenthesis '''
+    mydriver.get("https://progress.us1a.cirrus.ibm.com/api/rpt/dt/1600277460000/ms/jas8n38daai/1/1600431650693")
+
+    ''' check if the path of file exists in the directory to make sure file was actually downloaded '''
+    while not exists:
+        time.sleep(1)
+        exists = os.path.exists(checkfilepath)
+
+    ''' Close the session driver when the file was downloaded '''
+    mydriver.close()
+
 def backlogsub():
     '''This function creates the backlog report on a spreadsheet. It uses pandas functions to rename columns, 
     subtract not needed data/columns and filter the information. Also it modifies the date on certified field keeping only Month Year.
@@ -463,12 +484,8 @@ def dev_over90():
     df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
     df_Merge.loc[df_Merge['DEVELOPERS']=="Santiago Kitashima",'Manager']="Martin Campos"
     df_Merge.loc[df_Merge['DEVELOPERS']=="Maria Laura Bisaccia",'Manager']="Martin Campos"
-    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA135",'Manager']="Martin Campos"
-    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA111",'Manager']="Martin Campos"
-    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA128",'Manager']="Martin Campos"
-    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA146",'Manager']="Martin Campos"
-    df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA147",'Manager']="Martin Campos"
-
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Ezequiel Ferlauto",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Bruno Secchiari",'Manager']="Martin Campos"
 
     df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)
 
@@ -638,6 +655,8 @@ def chg_over30():
     for t in range(len(pos)):
         df_Merge['DEVELOPERS'][pos[t]]=valor[t]
 
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Santiago Kitashima",'Manager']="Martin Campos"
+    df_Merge.loc[df_Merge['DEVELOPERS']=="Maria Laura Bisaccia",'Manager']="Martin Campos"
     df_Merge['Count']=1
     #df_Merge
     df_Merge.to_excel(r"C:\Users\016434613\Desktop\chg over90.xlsx", index=False)
