@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
-from urllib import request as req
+import requests
 import json
 import time
 import pickle
@@ -17,21 +17,21 @@ def download_tasks():
     checkfilepath = r"C:\Users\016434613\Downloads\progress_dt_tasks_details_report.xlsx"
     exists = False
 
-    ''' This sentence takes care of deleting old tasks report on downloads folder '''
+    # This sentence takes care of deleting old tasks report on downloads folder
     subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_details_report.xlsx", shell=True, capture_output=True)
 
-    ''' Creating the driver conection to handle automatic session with Selenium '''
+    # Creating the driver conection to handle automatic session with Selenium
     mydriver = webdriver.Chrome("chromedriver.exe")
 
-    ''' automatically opening the above created session with the link in between parenthesis '''
+    # automatically opening the above created session with the link in between parenthesis
     mydriver.get("https://progress.us1a.cirrus.ibm.com/api/rpt/dt/1600277460000/ms/jas8n38daai/1/1600431650693")
 
-    ''' check if the path of file exists in the directory to make sure file was actually downloaded '''
+    # check if the path of file exists in the directory to make sure file was actually downloaded
     while not exists:
         time.sleep(1)
         exists = os.path.exists(checkfilepath)
 
-    ''' Close the session driver when the file was downloaded '''
+    # Close the session driver when the file was downloaded 
     mydriver.close()
 
 def backlogsub():
@@ -91,45 +91,15 @@ def validsub():
     df_Val['REQUESTED'] = df_Val['REQUESTED'].apply(lambda x: str(x))
     df_Val['REQUESTED'] = df_Val['REQUESTED'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
     
+    months = {"Dec":"12","Nov":"11","Oct":"10",
+    "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+    "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+
     for i in range(df_Val['REQUESTED'].size):
         fecha=df_Val['REQUESTED'][i]
-        if fecha[3:6] == 'Jan':
-            new_mes =fecha[0:2]+"/01/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Feb':
-            new_mes =fecha[0:2]+"/02/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Mar':
-            new_mes =fecha[0:2]+"/03/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Apr':
-            new_mes =fecha[0:2]+"/04/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'May':
-            new_mes =fecha[0:2]+"/05/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Jun':
-            new_mes =fecha[0:2]+"/06/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Jul':
-            new_mes =fecha[0:2]+"/07/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Aug':
-            new_mes =fecha[0:2]+"/08/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Sep':
-            new_mes =fecha[0:2]+"/09/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Oct':
-            new_mes =fecha[0:2]+"/10/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        elif fecha[3:6] == 'Nov':
-            new_mes =fecha[0:2]+"/11/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-        else:
-            new_mes =fecha[0:2]+"/12/"+fecha[7:11]
-            df_Val['REQUESTED'][i]=new_mes
-
+        m = fecha[3:6]
+        new_mes = fecha[0:2]+"/"+months[m]+"/"+fecha[7:11]
+        df_Val['REQUESTED'][i]=new_mes
 
     df_Val['Count']=1
     df_Val.to_excel(r"C:\Users\016434613\Desktop\Validation.xlsx", index=False)
@@ -180,9 +150,8 @@ def mgr_report():
     mgrname = {'016434613':'Martin Campos','A01130693':'Marek Tarkos','A51733693':'Andrej Csiaki','900688897':'Melissa Bledsoe'}
     devnames = {}
     for mgr in mgrserials:
-        request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/" + mgr + "/teamResolved")
-        datos = request.read().decode()
-        dictdatos = json.loads(datos)
+        req = requests.get("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/" + mgr + "/teamResolved")
+        dictdatos = req.json()
         devlist = dictdatos['content']['functional']['reports']
         for dev in devlist:
             devnames.setdefault(mgrname[mgr], []).append(dev['nameDisplay'])
@@ -323,50 +292,18 @@ def dev_over90():
 
     df_Versions.reset_index(inplace=True, drop=True)
     #df_Versions
+
+    months = {"Dec":"12","Nov":"11","Oct":"10",
+    "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+    "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+
+
     for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
         x = df_Versions['READY FOR DEVELOPMENT'][i]
-        if x[3:6]=="Dec":
-            s=x[0:3]+"12"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Nov":
-            s=x[0:3]+"11"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Oct":
-            s=x[0:3]+"10"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Sep":
-            s=x[0:3]+"09"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Aug":
-            s=x[0:3]+"08"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Jul":
-            s=x[0:3]+"07"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Jun":
-            s=x[0:3]+"06"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="May":
-            s=x[0:3]+"05"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Apr":
-            s=x[0:3]+"04"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Mar":
-            s=x[0:3]+"03"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Feb":
-            s=x[0:3]+"02"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        else:
-            s=x[0:3]+"01"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-            
+        m = x[3:6]
+        s = x[0:3]+months[m]+x[6:12]
+        df_Versions['READY FOR DEVELOPMENT'][i]=s
 
-
-
-
-    #'1Q' if x == 'Jan2022' else '1Q' if x == 'Feb2022' else '1Q' if x == 'Mar2022' else 'Other'
 
     df_Development = pd.read_excel(filepath_,sheet_name="Development (Iterations)")
 
@@ -387,42 +324,9 @@ def dev_over90():
 
     for i in range(df_Development['STARTED'].size):
         x = df_Development['STARTED'][i]
-        if x[3:6]=="Dec":
-            s=x[0:3]+"12"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Nov":
-            s=x[0:3]+"11"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Oct":
-            s=x[0:3]+"10"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Sep":
-            s=x[0:3]+"09"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Aug":
-            s=x[0:3]+"08"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Jul":
-            s=x[0:3]+"07"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Jun":
-            s=x[0:3]+"06"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="May":
-            s=x[0:3]+"05"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Apr":
-            s=x[0:3]+"04"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Mar":
-            s=x[0:3]+"03"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Feb":
-            s=x[0:3]+"02"+x[6:12]
-            df_Development['STARTED'][i]=s
-        else:
-            s=x[0:3]+"01"+x[6:12]
-            df_Development['STARTED'][i]=s
+        m = x[3:6]
+        s = x[0:3]+months[m]+x[6:12]
+        df_Development['STARTED'][i]=s
 
 
     df_Merge = df_Versions.merge(df_Development, on="VERSION ID", how="left")
@@ -507,51 +411,17 @@ def chg_over30():
     df_Versions.fillna(value="?",inplace=True)
 
     df_Versions.reset_index(inplace=True, drop=True)
-    #df_Versions
+
+    months = {"Dec":"12","Nov":"11","Oct":"10",
+    "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+    "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+
     for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
         x = df_Versions['READY FOR DEVELOPMENT'][i]
-        if x[3:6]=="Dec":
-            s=x[0:3]+"12"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Nov":
-            s=x[0:3]+"11"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Oct":
-            s=x[0:3]+"10"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Sep":
-            s=x[0:3]+"09"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Aug":
-            s=x[0:3]+"08"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Jul":
-            s=x[0:3]+"07"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Jun":
-            s=x[0:3]+"06"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="May":
-            s=x[0:3]+"05"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Apr":
-            s=x[0:3]+"04"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Mar":
-            s=x[0:3]+"03"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        elif x[3:6]=="Feb":
-            s=x[0:3]+"02"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-        else:
-            s=x[0:3]+"01"+x[6:12]
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
-            
+        m = x[3:6]
+        s = x[0:3]+months[m]+x[6:12]
+        df_Versions['READY FOR DEVELOPMENT'][i]=s
 
-    #df_Versions
-
-
-    #'1Q' if x == 'Jan2022' else '1Q' if x == 'Feb2022' else '1Q' if x == 'Mar2022' else 'Other'
 
     df_Development = pd.read_excel(filepath_,sheet_name="Development (Iterations)")
 
@@ -572,50 +442,15 @@ def chg_over30():
 
     for i in range(df_Development['STARTED'].size):
         x = df_Development['STARTED'][i]
-        if x[3:6]=="Dec":
-            s=x[0:3]+"12"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Nov":
-            s=x[0:3]+"11"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Oct":
-            s=x[0:3]+"10"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Sep":
-            s=x[0:3]+"09"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Aug":
-            s=x[0:3]+"08"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Jul":
-            s=x[0:3]+"07"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Jun":
-            s=x[0:3]+"06"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="May":
-            s=x[0:3]+"05"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Apr":
-            s=x[0:3]+"04"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Mar":
-            s=x[0:3]+"03"+x[6:12]
-            df_Development['STARTED'][i]=s
-        elif x[3:6]=="Feb":
-            s=x[0:3]+"02"+x[6:12]
-            df_Development['STARTED'][i]=s
-        else:
-            s=x[0:3]+"01"+x[6:12]
-            df_Development['STARTED'][i]=s
+        m = x[3:6]
+        s = x[0:3]+months[m]+x[6:12]
+        df_Development['STARTED'][i]=s
 
 
     df_Merge = df_Versions.merge(df_Development, on="VERSION ID", how="left")
-    #df_Merge.drop(columns=['index_x','index_y'],inplace=True)
     df_Merge.dropna(inplace=True)
 
     df_Merge.reset_index(inplace=True, drop=True)
-    #df_Merge.drop(columns=['index'],inplace=True)
 
     from datetime import datetime
     p = datetime.today().strftime('%d/%m/%Y')
@@ -640,7 +475,6 @@ def chg_over30():
     valor = []
     cont=0
 
-    #df_Merge['DEVELOPERS']
     for i in range(df_Merge['DEVELOPERS'].size):
         x=re.search(",",df_Merge['DEVELOPERS'][i])
         if x is not None:
@@ -699,8 +533,6 @@ def ideas():
 
     df_Sdideas = df_Sdideas.rename(columns={'CREATED BY (NAME)':'DSL','CREATED BY (EMAIL)':'DSL MAIL','LOCATIONS OF MANUAL EXECUTION':'LOCATIONS','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS'})
     df_Sdideas = df_Sdideas.loc[:,['IDEA ID','CREATED','DSL','DSL MAIL','STATUS','TITLE','AUTOMATION TYPE','LOCATIONS','SAVING HS']]
-    #df_Sdideas['CREATED'] = df_Sdideas['CREATED'].apply(lambda x: str(x))
-    #df_Sdideas['CREATED'] = df_Sdideas['CREATED'].apply(lambda x: x[4:7]+" "+x[11:15])
     df_Sdideas['CREATED'] = "SDA"
     df_Sdideas = df_Sdideas.loc[df_Sdideas['STATUS']=="Submitted"]
     df_Sdideas.drop(columns=['STATUS'],inplace=True)
