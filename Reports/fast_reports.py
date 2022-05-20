@@ -98,7 +98,7 @@ def validsub():
     for i in range(df_Val['REQUESTED'].size):
         fecha=df_Val['REQUESTED'][i]
         m = fecha[3:6]
-        new_mes = fecha[0:2]+"/"+months[m]+"/"+fecha[7:11]
+        new_mes = fecha[0:3]+months[m]+fecha[6:12]
         df_Val['REQUESTED'][i]=new_mes
 
     df_Val['Count']=1
@@ -285,6 +285,7 @@ def dev_over90():
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="Sunset"]
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="Closed"]
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="In Production"]
+    #df_Versions = df_Versions.loc[df_Versions['READY FOR DEVELOPMENT'].notnull()]
     df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: str(x))
     df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
 
@@ -301,7 +302,10 @@ def dev_over90():
     for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
         x = df_Versions['READY FOR DEVELOPMENT'][i]
         m = x[3:6]
-        s = x[0:3]+months[m]+x[6:12]
+        if m != "":
+            s = x[0:3]+months[m]+x[6:12]
+        else:
+            s = ""
         df_Versions['READY FOR DEVELOPMENT'][i]=s
 
 
@@ -405,6 +409,7 @@ def chg_over30():
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="Sunset"]
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="Closed"]
     df_Versions = df_Versions.loc[df_Versions['STATUS']!="In Production"]
+    #df_Versions = df_Versions.loc[df_Versions['READY FOR DEVELOPMENT'].notnull()]
     df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: str(x))
     df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
 
@@ -419,7 +424,10 @@ def chg_over30():
     for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
         x = df_Versions['READY FOR DEVELOPMENT'][i]
         m = x[3:6]
-        s = x[0:3]+months[m]+x[6:12]
+        if m != "":
+            s = x[0:3]+months[m]+x[6:12]
+        else:
+            s = ""
         df_Versions['READY FOR DEVELOPMENT'][i]=s
 
 
@@ -430,7 +438,7 @@ def chg_over30():
     df_Development = df_Development.loc[df_Development['STATUS']!="Sunset"]
     df_Development = df_Development.loc[df_Development['STATUS']!="Closed"]
     df_Development = df_Development.loc[df_Development['STATUS']!="In Production"]
-
+    
     df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: str(x))
     df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
 
