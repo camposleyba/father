@@ -18,7 +18,8 @@ def download_tasks():
     exists = False
 
     # This sentence takes care of deleting old tasks report on downloads folder
-    subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_details_report.xlsx", shell=True, capture_output=True)
+    if os.path.exists(checkfilepath):
+        subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_details_report.xlsx", shell=True, capture_output=True)
 
     # Creating the driver conection to handle automatic session with Selenium
     mydriver = webdriver.Chrome("chromedriver.exe")
@@ -196,7 +197,8 @@ def download_master():
     exists = False
 
     # This sentence takes care of deleting old mater report on downloads folder
-    subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
+    if os.path.exists(checkfilepath):
+        subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
 
     mydriver = webdriver.Chrome("chromedriver.exe")
     mydriver.get("https://progress.us1a.cirrus.ibm.com/api/rpt/mst/1588760663192/lf/bd3hd8xaj/0/1588760727599")
@@ -266,6 +268,11 @@ def delivery_report():
     df5.loc[df5['DEVELOPERS']=="Tomas Funes",'Manager']="Martin Campos"
     df5.loc[df5['ROBOT_NUMBER']=="ODA139",'DEVELOPERS']="Ezequiel Ferlauto"
     df5.loc[df5['ROBOT_NUMBER']=="ODA149",'DEVELOPERS']="Ezequiel Ferlauto"
+    df5.loc[df5['ROBOT_NUMBER']=="ODA146",'DEVELOPERS']="Ezequiel Ferlauto"
+    df5.loc[df5['ROBOT_NUMBER']=="ODA147",'DEVELOPERS']="Ezequiel Ferlauto"
+    df5.loc[df5['ROBOT_NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
+    df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
+    df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
 
     df5['Count']=1
             
@@ -504,10 +511,12 @@ def chg_over30():
     df_Merge.to_excel(r"C:\Users\016434613\Desktop\chg over90.xlsx", index=False)
 
 def download_ideas_sd():
-    subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_sd_tasks_master_report.xlsx", shell=True, capture_output=True)
     checkfilepath=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     exists = False
 
+    if os.path.exists(checkfilepath):
+        subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_sd_tasks_master_report.xlsx", shell=True, capture_output=True)
+    
     mydriver = webdriver.Chrome("chromedriver.exe")
     mydriver.get("https://progress.us1a.cirrus.ibm.com/api/rpt/sd/1300295498644/ms/ros4kf4irqedd/1/13004457294999")
     while not exists:
@@ -579,10 +588,9 @@ def update_specification():
     button.click()
     time.sleep(15)
 
-
     for item_ in list_:
         mydriver.get("https://progress.us1a.cirrus.ibm.com/digital-transformation/task/"+item_)
-        wait = WebDriverWait(mydriver, 12)
+        wait = WebDriverWait(mydriver, 15)
         element = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="container-3"]/div[1]/app-task-preview/div/div/task-preview-header/div/div[2]/div[2]/div[2]/button/span[1]/mat-icon')))
         #time.sleep(12)
         try:
@@ -592,4 +600,29 @@ def update_specification():
             timeelem_list.append('Issues loading')
     mydriver.close()
     df_Spec['Last_Updated']=timeelem_list
+    df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
+
+def add_days():
+    filepath_=r"C:\Users\016434613\Desktop\Specification.xlsx"
+    df_Spec = pd.read_excel(filepath_,sheet_name="Sheet1")
+    days_dict = {
+        "2 years ago":730,
+        "a year ago":365,
+        "11 months ago":330,
+        "10 months ago":300,
+        "9 months ago":270,
+        "8 months ago":240,
+        "7 months ago":210,
+        "6 months ago":180,
+        "5 months ago":150,
+        "4 months ago":120,
+        "3 months ago":90,
+        "2 months ago":60,
+        "a month ago":30
+        
+    }
+
+    key_list = list(days_dict.keys())
+    for k in key_list:
+        df_Spec.loc[df_Spec['Last_Updated']==k,'Days']=days_dict[k]
     df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
