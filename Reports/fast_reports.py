@@ -613,7 +613,7 @@ class FastReports():
             user = mydriver.find_element_by_xpath('//*[@id="user-name-input"]')
             user.send_keys(cred['user'])
             psw = mydriver.find_element_by_xpath('//*[@id="password-input"]')
-            psw.send_keys(cred['psw'])
+            psw.send_keys(cred['password'])
             button = mydriver.find_element_by_xpath('//*[@id="login-button"]')
             button.click()
             time.sleep(15)
