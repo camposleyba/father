@@ -2,8 +2,12 @@ from urllib.request import Request, urlopen
 import re
 
 def search_movie_series(addr):
-    request = Request("https://1337x.to/search/"+addr+"/1/", headers={'User-Agent': 'Mozilla/5.0'})
-    web = urlopen(request)
+    try:
+        request = Request("https://1337x.to/search/"+addr+"/1/", headers={'User-Agent': 'Mozilla/5.0'})
+        web = urlopen(request)
+    except:
+        request = Request("https://1377x.to/search/"+addr+"/1/", headers={'User-Agent': 'Mozilla/5.0'})
+        web = urlopen(request)
     datos = web.read().decode()
     try:
         sear = re.search(r"<a href=\"/torrent/",datos )
@@ -17,8 +21,12 @@ def search_movie_series(addr):
         return "There is no torrent for the movie or series you choosed!"
 
 def search_magnetLink(l):
-    request = Request("https://1337x.to/"+l, headers={'User-Agent': 'Mozilla/5.0'})
-    web = urlopen(request)
+    try:
+        request = Request("https://1337x.to/"+l, headers={'User-Agent': 'Mozilla/5.0'})
+        web = urlopen(request)
+    except:
+        request = Request("https://1377x.to/"+l, headers={'User-Agent': 'Mozilla/5.0'})
+        web = urlopen(request)       
     datos = web.read().decode()
     sear = re.search(r"href=\"magnet:\?xt=urn:btih:",datos )
     posini = sear.span()[0]

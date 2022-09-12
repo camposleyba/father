@@ -1,6 +1,7 @@
 import pandas as pd
 from urllib import request as req
 import json
+import requests
 
 class centerLeader():
 
@@ -8,7 +9,7 @@ class centerLeader():
 		self.cnum = cnum
 		self.clname = clname
 
-	def centerLead(self, loc):
+	def centerLead(self, loc=''):
 		self.loc = loc
 		reportnames = []
 		reportserial = []
@@ -45,7 +46,14 @@ class centerLeader():
 		    		self.loc = "Other"
 		    	locality.append(self.loc)
 		    else:
-		    	locality.append(self.loc)
+		    	if self.loc == '':
+		    		try:
+		    			l=r['address']['business']['locality']
+		    			locality.append(l)
+		    		except:
+		    			locality.append('')
+		    	else:
+		    		locality.append(self.loc)
 		    try:
 		    	identity.append(r['preferredIdentity'])
 		    except:
@@ -60,6 +68,21 @@ class centerLeader():
 		df_cl['EmpType'] = emp_type
 		df_cl['Job_title'] = role
 
+		r = requests.get("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+self.cnum+"/profile_combined")
+		dictdatos = r.json()
+
+		location = dictdatos['content']['identity_info']['content']['address']['business']['locality']
+		email = dictdatos['content']['identity_info']['content']['mail'][0]
+		manager = dictdatos['content']['identity_info']['content']['functionalManager']['nameDisplay']
+		empType = dictdatos['content']['identity_info']['content']['employeeType']['title']
+		job_tit = dictdatos['content']['identity_info']['content']['role']
+
+		df_f = { "Reports":self.clname,"Serials":self.cnum,
+			"isManager":True,"Location":location,"Email":email,
+			"Manager":manager,"EmpType":empType,
+			"Job_title":job_tit
+			}
+		df_cl = df_cl.append(df_f, ignore_index=True)
 		return df_cl
 
 	def reportFunc(self, dataframe):
@@ -74,33 +97,37 @@ class centerLeader():
 
 
 		for i in range(dataframe['Reports'].size):
-		    request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+dataframe['Serials'][i]+"/teamResolved")
-		    datos = request.read().decode()
-		    dictdatos = json.loads(datos)
-		    try:
-		        reports = dictdatos['content']['functional']['reports']
-		        for r in reports:
-		            reportnames_.append(r['nameDisplay'])
-		            reportserial_.append(r['uid'])
-		            emp_type_.append(r['employeeType']['title'])
-		            try:
-		            	role_.append(r['role'])
-		            except:
-		            	role_.append('')
-		            try:
-		                email = r['preferredIdentity']
-		                identity_.append(r['preferredIdentity'])
-		            except:
-		                identity_.append('Contractor or LoA')
-		            isMgr_.append(r['isManager'])
-		            try:
-		                location = r['address']['business']['locality']
-		                locality_.append(self.loc)
-		            except:
-		                locality_.append('Contractor')
-		            mgr_.append(dataframe['Reports'][i])
-		    except:
-		    	pass
+			if dataframe['Serials'][i] != self.cnum:
+			    request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+dataframe['Serials'][i]+"/teamResolved")
+			    datos = request.read().decode()
+			    dictdatos = json.loads(datos)
+			    try:
+			        reports = dictdatos['content']['functional']['reports']
+			        for r in reports:
+			            reportnames_.append(r['nameDisplay'])
+			            reportserial_.append(r['uid'])
+			            emp_type_.append(r['employeeType']['title'])
+			            try:
+			            	role_.append(r['role'])
+			            except:
+			            	role_.append('')
+			            try:
+			                email = r['preferredIdentity']
+			                identity_.append(r['preferredIdentity'])
+			            except:
+			                identity_.append('Contractor or LoA')
+			            isMgr_.append(r['isManager'])
+			            try:
+			                location = r['address']['business']['locality']
+			                if self.loc == '':
+			                	locality_.append(location)
+			                else:
+			                	locality_.append(self.loc)
+			            except:
+			                locality_.append('')
+			            mgr_.append(dataframe['Reports'][i])
+			    except:
+			    	pass
 
 		df_Reports = pd.DataFrame(reportnames_, columns=['Reports'])
 		df_Reports['Serials'] = reportserial_
@@ -170,6 +197,8 @@ class centerLeader():
 		return df_ReportsDT
 
 	def calculateRepo(self, df):
+		''' This function returns a list with the actual number of reports each mgr has. It takes as parameter a dataframe to create a list of serials that will input 
+		on the BluePages API and will count the number of reports, if it is 0 will add 0'''
 		serial_list = df['Serials'].tolist()
 		list_ = []
 		for s in serial_list:

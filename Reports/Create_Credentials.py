@@ -21,6 +21,14 @@ class createCredentials():
 			pickle.dump(dict_cred,f)
 			print('Credentials successfully created!')
 
+	def createWithDict(self, name='credentials',dict_cred={}):
+		self.dict = dict_cred
+		self.name = name
+		with open(self.name, 'wb') as f:
+			pickle.dump(self.dict,f)
+			print('Credentials successfully created!')
+
+
 	def load(self, name='credentials'):
 		''' Load function, is used to check the previously saved credentials on the file already provided on 
 		the create function'''

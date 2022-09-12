@@ -19,6 +19,7 @@ class FastReports():
     filepath_ideas=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     filepath_spec=r"C:\Users\016434613\Desktop\Specification.xlsx"
     spec_completed=False
+    quarter='3Q22'
 
     def download_tasks(self):
         checkfilepath = self.filepath_tasks
@@ -214,7 +215,6 @@ class FastReports():
         # This sentence takes care of deleting old mater report on downloads folder
         if os.path.exists(checkfilepath):
             subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
-
         try:
             mydriver = webdriver.Chrome("chromedriver.exe")
         except:
@@ -222,7 +222,8 @@ class FastReports():
         try:
             mydriver.get("https://progress.us1a.cirrus.ibm.com/api/rpt/mst/1588760663192/lf/bd3hd8xaj/0/1588760727599")
         except:
-            print("timeour, networking issues, try again later.")
+            print("timeout, networking issues, try again later.")
+            mydriver.close()
         while not exists:
             time.sleep(1)
             exists = os.path.exists(checkfilepath)
@@ -230,6 +231,7 @@ class FastReports():
 
     def delivery_report(self):
         filepath_ = self.filepath_tasks
+        quarter = self.quarter
 
         df = pd.read_excel(filepath_,sheet_name="Tasks")
         df = df.rename(columns={'ROBOT NUMBER':'ROBOT_NUMBER'})
@@ -250,7 +252,7 @@ class FastReports():
         df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q22' if x == 'Sep2022' else '3Q22' if x == 'Aug2022' else '3Q22' if x == 'Jul2022' else x)
         df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q22' if x == 'Dec2022' else '4Q22' if x == 'Nov2022' else '4Q22' if x == 'Oct2022' else x)
 
-        df5 = df4.loc[df4['QUARTER']=='2Q22',]
+        df5 = df4.loc[df4['QUARTER']==quarter,]
         df5.drop(columns=["ORIGIN RELEASE"],inplace=True)
 
         filepath_ = self.filepath_master
@@ -620,7 +622,7 @@ class FastReports():
 
             for item_ in list_:
                 mydriver.get("https://progress.us1a.cirrus.ibm.com/digital-transformation/task/"+item_)
-                wait = WebDriverWait(mydriver, 30)
+                wait = WebDriverWait(mydriver, 60)
                 element = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="container-3"]/div[1]/app-task-preview/div/div/task-preview-header/div/div[2]/div[2]/div[2]/button/span[1]/mat-icon')))
                 #time.sleep(12)
                 try:
@@ -630,8 +632,12 @@ class FastReports():
                     timeelem_list.append('Issues loading')
             mydriver.close()
             df_Spec['Last_Updated']=timeelem_list
-            df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
-            self.spec_completed = True
+            if self.filepath_spec == r"C:\Users\016434613\Desktop\Specification.xlsx":
+                df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
+                self.spec_completed = True
+            else:
+                df_Spec.to_excel(r"C:\Users\016434613\Desktop\Reports\Specification.xlsx", index=False)
+                self.spec_completed = True         
         except:
             print("timeout, networking issues, try again later.")
 
@@ -643,25 +649,30 @@ class FastReports():
             filepath_=self.filepath_spec
             df_Spec = pd.read_excel(filepath_,sheet_name="Sheet1")
             days_dict = {
-                "2 years ago":730,
-                "a year ago":365,
-                "11 months ago":330,
-                "10 months ago":300,
-                "9 months ago":270,
-                "8 months ago":240,
-                "7 months ago":210,
-                "6 months ago":180,
-                "5 months ago":150,
-                "4 months ago":120,
-                "3 months ago":90,
-                "2 months ago":60,
-                "a month ago":30
+                " 2 years ago ":730,
+                " a year ago ":365,
+                " 11 months ago ":330,
+                " 10 months ago ":300,
+                " 9 months ago ":270,
+                " 8 months ago ":240,
+                " 7 months ago ":210,
+                " 6 months ago ":180,
+                " 5 months ago ":150,
+                " 4 months ago ":120,
+                " 3 months ago ":90,
+                " 2 months ago ":60,
+                " a month ago ":30
                 
             }
 
             key_list = list(days_dict.keys())
             for k in key_list:
                 df_Spec.loc[df_Spec['Last_Updated']==k,'Days']=days_dict[k]
-            df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
+            if self.filepath_spec == r"C:\Users\016434613\Desktop\Specification.xlsx":
+                df_Spec.to_excel(r"C:\Users\016434613\Desktop\Specification.xlsx", index=False)
+                self.spec_completed = True
+            else:
+                df_Spec.to_excel(r"C:\Users\016434613\Desktop\Reports\Specification.xlsx", index=False)
+                self.spec_completed = True 
         else:
             print("Specificaction update did not complete, I can not run!.")
