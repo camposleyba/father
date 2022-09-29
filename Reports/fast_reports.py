@@ -10,6 +10,8 @@ import requests
 import json
 import time
 import pickle
+import glob
+from shutil import copyfile
 
 
 class FastReports():
@@ -18,6 +20,7 @@ class FastReports():
     filepath_master=r"C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx"
     filepath_ideas=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     filepath_spec=r"C:\Users\016434613\Desktop\Specification.xlsx"
+    download_master_box=r"C:\Users\016434613\Box\MASTER REPORT\Master Report 2022 3Q"
     spec_completed=False
     quarter='3Q22'
 
@@ -229,6 +232,21 @@ class FastReports():
             exists = os.path.exists(checkfilepath)
         mydriver.close()
 
+    def download_master_2(self):
+        checkfilepath = self.filepath_master
+        download_master_box = self.download_master_box
+        
+
+        # This sentence takes care of deleting old mater report on downloads folder
+        if os.path.exists(checkfilepath):
+            subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
+
+        all_files = glob.glob(download_master_box+"\\*.xlsx")
+        all_files = sorted(all_files, reverse=True)
+        
+        copyfile(all_files[0],r'C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx')
+
+
     def delivery_report(self):
         filepath_ = self.filepath_tasks
         quarter = self.quarter
@@ -265,6 +283,8 @@ class FastReports():
         df_Development.reset_index(inplace=True, drop=True)
 
         df5 = df5.merge(df_Development, on="VERSION ID", how="left")
+
+        df5.loc[df5['VERSION ID']=='6329f38e3d3f2f2ee3ebc99e','DEVELOPERS']='Dario Cesar Atach'
 
         pos = []
         valor = []
@@ -424,6 +444,7 @@ class FastReports():
         df_Merge.loc[df_Merge['DEVELOPERS']=="Maria Laura Bisaccia",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Ezequiel Ferlauto",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Bruno Secchiari",'Manager']="Martin Campos"
+        df_Merge.loc[df_Merge['DEVELOPERS']=="Michele Lobina, Richard Nerodolík",'Manager']="Andrej Csiaki"
 
         df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)
 
