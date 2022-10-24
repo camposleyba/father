@@ -20,7 +20,7 @@ class FastReports():
     filepath_master=r"C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx"
     filepath_ideas=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     filepath_spec=r"C:\Users\016434613\Desktop\Specification.xlsx"
-    download_master_box=r"C:\Users\016434613\Box\MASTER REPORT\Master Report 2022 3Q"
+    download_master_box=r"C:\Users\016434613\Box\MASTER REPORT\Master Report 2022 4Q"
     spec_completed=False
     quarter='3Q22'
 
@@ -34,7 +34,7 @@ class FastReports():
 
         try:
         # Creating the driver conection to handle automatic session with Selenium
-            mydriver = webdriver.Chrome("chromedriver.exe")
+            mydriver = webdriver.Chrome(r"C:\Users\016434613\Dev\Reports\chromedriver.exe")
         except:
             print("Update chrome driver version")
 
@@ -109,17 +109,17 @@ class FastReports():
         df_Val.drop_duplicates('VERSION ID', inplace=True)
         df_Val.reset_index(inplace=True, drop=True)
         df_Val['REQUESTED'] = df_Val['REQUESTED'].apply(lambda x: str(x))
-        df_Val['REQUESTED'] = df_Val['REQUESTED'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
+        df_Val['REQUESTED'] = df_Val['REQUESTED'].apply(lambda x: x[8:10]+"/"+x[5:7]+"/"+x[0:4])
 
-        months = {"Dec":"12","Nov":"11","Oct":"10",
-        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
-        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+#        months = {"Dec":"12","Nov":"11","Oct":"10",
+#        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+#        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
 
-        for i in range(df_Val['REQUESTED'].size):
-            fecha=df_Val['REQUESTED'][i]
-            m = fecha[3:6]
-            new_mes = fecha[0:3]+months[m]+fecha[6:12]
-            df_Val['REQUESTED'][i]=new_mes
+#        for i in range(df_Val['REQUESTED'].size):
+#            fecha=df_Val['REQUESTED'][i]
+#            m = fecha[3:6]
+#            new_mes = fecha[0:3]+months[m]+fecha[6:12]
+#            df_Val['REQUESTED'][i]=new_mes
 
         df_Val['Count']=1
         df_Val.to_excel(r"C:\Users\016434613\Desktop\Validation.xlsx", index=False)
@@ -285,6 +285,12 @@ class FastReports():
         df5 = df5.merge(df_Development, on="VERSION ID", how="left")
 
         df5.loc[df5['VERSION ID']=='6329f38e3d3f2f2ee3ebc99e','DEVELOPERS']='Dario Cesar Atach'
+        df5.loc[df5['VERSION ID']=='633549dbaec8d48dde23dff8','DEVELOPERS']='Marián Chrást'
+        df5.loc[df5['VERSION ID']=='633823c7ffd0c408ad843990','DEVELOPERS']='Branislav Podoba'
+        df5.loc[df5['ROBOT_NUMBER']=='ATA053','DEVELOPERS']='Milan Babčanec'
+        df5.loc[df5['ROBOT_NUMBER']=='ATA712','DEVELOPERS']='Richard Hantke'
+        df5.loc[df5['ROBOT_NUMBER']=='WBA012','DEVELOPERS']='Rodrigo Maximiliano Cremella'
+        
 
         pos = []
         valor = []
@@ -316,6 +322,8 @@ class FastReports():
         df5.loc[df5['ROBOT_NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA178",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA181",'DEVELOPERS']="Bruno Secchiari"
 
         df5['Count']=1
                 
@@ -337,26 +345,26 @@ class FastReports():
         df_Versions = df_Versions.loc[df_Versions['STATUS']!="In Production"]
         #df_Versions = df_Versions.loc[df_Versions['READY FOR DEVELOPMENT'].notnull()]
         df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: str(x))
-        df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
+        df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[5:7]+"/"+x[0:4])
 
         df_Versions.fillna(value="?",inplace=True)
 
         df_Versions.reset_index(inplace=True, drop=True)
         #df_Versions
 
-        months = {"Dec":"12","Nov":"11","Oct":"10",
-        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
-        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+#        months = {"Dec":"12","Nov":"11","Oct":"10",
+#        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+#        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
 
 
-        for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
-            x = df_Versions['READY FOR DEVELOPMENT'][i]
-            m = x[3:6]
-            if m != "":
-                s = x[0:3]+months[m]+x[6:12]
-            else:
-                s = ""
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
+#        for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
+#            x = df_Versions['READY FOR DEVELOPMENT'][i]
+#            m = x[3:6]
+#            if m != "":
+#                s = x[0:3]+months[m]+x[6:12]
+#            else:
+#                s = ""
+#            df_Versions['READY FOR DEVELOPMENT'][i]=s
 
 
         df_Development = pd.read_excel(filepath_,sheet_name="Development (Iterations)")
@@ -368,7 +376,7 @@ class FastReports():
         df_Development = df_Development.loc[df_Development['STATUS']!="In Production"]
 
         df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: str(x))
-        df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
+        df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: x[8:10]+"/"+x[5:7]+"/"+x[0:4])
 
         df_Development = df_Development.loc[:,['VERSION ID','DEVELOPERS','STARTED']]
 
@@ -376,11 +384,11 @@ class FastReports():
 
         df_Development.reset_index(inplace=True, drop=True)
 
-        for i in range(df_Development['STARTED'].size):
-            x = df_Development['STARTED'][i]
-            m = x[3:6]
-            s = x[0:3]+months[m]+x[6:12]
-            df_Development['STARTED'][i]=s
+#        for i in range(df_Development['STARTED'].size):
+#            x = df_Development['STARTED'][i]
+#            m = x[3:6]
+#            s = x[0:3]+months[m]+x[6:12]
+#            df_Development['STARTED'][i]=s
 
 
         df_Merge = df_Versions.merge(df_Development, on="VERSION ID", how="left")
@@ -462,24 +470,24 @@ class FastReports():
         df_Versions = df_Versions.loc[df_Versions['STATUS']!="In Production"]
         #df_Versions = df_Versions.loc[df_Versions['READY FOR DEVELOPMENT'].notnull()]
         df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: str(x))
-        df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
+        df_Versions['READY FOR DEVELOPMENT'] = df_Versions['READY FOR DEVELOPMENT'].apply(lambda x: x[8:10]+"/"+x[5:7]+"/"+x[0:4])
 
         df_Versions.fillna(value="?",inplace=True)
 
         df_Versions.reset_index(inplace=True, drop=True)
 
-        months = {"Dec":"12","Nov":"11","Oct":"10",
-        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
-        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
+#        months = {"Dec":"12","Nov":"11","Oct":"10",
+#        "Sep":"09","Aug":"08","Jul":"07","Jun":"06","May":"05",
+#        "Apr":"04","Mar":"03","Feb":"02","Jan":"01"}
 
-        for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
-            x = df_Versions['READY FOR DEVELOPMENT'][i]
-            m = x[3:6]
-            if m != "":
-                s = x[0:3]+months[m]+x[6:12]
-            else:
-                s = ""
-            df_Versions['READY FOR DEVELOPMENT'][i]=s
+#        for i in range(df_Versions['READY FOR DEVELOPMENT'].size):
+#            x = df_Versions['READY FOR DEVELOPMENT'][i]
+#            m = x[3:6]
+#            if m != "":
+#                s = x[0:3]+months[m]+x[6:12]
+#            else:
+#                s = ""
+#            df_Versions['READY FOR DEVELOPMENT'][i]=s
 
 
         df_Development = pd.read_excel(filepath_,sheet_name="Development (Iterations)")
@@ -491,7 +499,7 @@ class FastReports():
         df_Development = df_Development.loc[df_Development['STATUS']!="In Production"]
 
         df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: str(x))
-        df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: x[8:10]+"/"+x[4:7]+"/"+x[11:15])
+        df_Development['STARTED'] = df_Development['STARTED'].apply(lambda x: x[8:10]+"/"+x[5:7]+"/"+x[0:4])
 
         df_Development = df_Development.loc[:,['VERSION ID','DEVELOPERS','STARTED']]
 
@@ -499,11 +507,11 @@ class FastReports():
 
         df_Development.reset_index(inplace=True, drop=True)
 
-        for i in range(df_Development['STARTED'].size):
-            x = df_Development['STARTED'][i]
-            m = x[3:6]
-            s = x[0:3]+months[m]+x[6:12]
-            df_Development['STARTED'][i]=s
+#        for i in range(df_Development['STARTED'].size):
+#            x = df_Development['STARTED'][i]
+#            m = x[3:6]
+#            s = x[0:3]+months[m]+x[6:12]
+#            df_Development['STARTED'][i]=s
 
 
         df_Merge = df_Versions.merge(df_Development, on="VERSION ID", how="left")
