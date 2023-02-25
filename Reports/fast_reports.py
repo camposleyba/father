@@ -20,7 +20,7 @@ class FastReports():
     filepath_master=r"C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx"
     filepath_ideas=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     filepath_spec=r"C:\Users\016434613\Desktop\Specification.xlsx"
-    download_master_box=r"C:\Users\016434613\Box\MASTER REPORT\Master Report 2022 4Q"
+    download_master_box=r"C:\Users\016434613\Box\ATA721 - Progress Master Report Download\Master Report 2023 1Q"
     spec_completed=False
     quarter='3Q22'
 
@@ -170,7 +170,7 @@ class FastReports():
         mgrname = {'016434613':'Martin Campos','A01130693':'Marek Tarkos','A51733693':'Andrej Csiaki','900688897':'Melissa Bledsoe'}
         devnames = {}
         for mgr in mgrserials:
-            req = requests.get("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/" + mgr + "/teamResolved")
+            req = requests.get("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/" + mgr + "/teamResolved")
             dictdatos = req.json()
             devlist = dictdatos['content']['functional']['reports']
             for dev in devlist:
@@ -241,7 +241,7 @@ class FastReports():
         if os.path.exists(checkfilepath):
             subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
 
-        all_files = glob.glob(download_master_box+"\\*.xlsx")
+        all_files = glob.glob(download_master_box+"\\Master Progress*.xlsx")
         all_files = sorted(all_files, reverse=True)
         
         copyfile(all_files[0],r'C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx')
@@ -269,6 +269,8 @@ class FastReports():
         df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q22' if x == 'Jun2022' else '2Q22' if x == 'May2022' else '2Q22' if x == 'Apr2022' else x)
         df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q22' if x == 'Sep2022' else '3Q22' if x == 'Aug2022' else '3Q22' if x == 'Jul2022' else x)
         df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q22' if x == 'Dec2022' else '4Q22' if x == 'Nov2022' else '4Q22' if x == 'Oct2022' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q23' if x == 'Mar2023' else '1Q23' if x == 'Feb2023' else '1Q23' if x == 'Jan2023' else x)
+
 
         df5 = df4.loc[df4['QUARTER']==quarter,]
         df5.drop(columns=["ORIGIN RELEASE"],inplace=True)
@@ -320,10 +322,21 @@ class FastReports():
         df5.loc[df5['ROBOT_NUMBER']=="ODA146",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA147",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA128",'DEVELOPERS']="Ezequiel Ferlauto"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA140",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA178",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA186",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA181",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA169",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA175",'DEVELOPERS']="Peter Blahut"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA184",'DEVELOPERS']="Peter Blahut"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA185",'DEVELOPERS']="Peter Blahut"
+        
+
+
+
 
         df5['Count']=1
                 
@@ -448,12 +461,16 @@ class FastReports():
         df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA147",'DEVELOPERS']="Ezequiel Ferlauto"
         df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
         df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
+        df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA169",'DEVELOPERS']="Bruno Secchiari"
+        df_Merge.loc[df_Merge['ROBOT NUMBER']=="ODA186",'DEVELOPERS']="Bruno Secchiari"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Santiago Kitashima",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Maria Laura Bisaccia",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Ezequiel Ferlauto",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Bruno Secchiari",'Manager']="Martin Campos"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Michele Lobina, Richard Nerodolík",'Manager']="Andrej Csiaki"
-
+        df_Merge.loc[df_Merge['DEVELOPERS']=="Terézia Straková",'Manager']="Andrej Csiaki"
+        df_Merge.loc[df_Merge['DEVELOPERS']=="Nikolaj Kniha",'Manager']="Andrej Csiaki"
+        
         df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)
 
     def chg_over30(self):
@@ -623,6 +640,7 @@ class FastReports():
 
         df_Ideas['Count']=1
         df_Ideas.to_excel(r"C:\Users\016434613\Desktop\Ideas.xlsx", index=False)
+
 
     def update_specification(self):
         with open('w3id_credentials','rb') as f:
