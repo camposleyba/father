@@ -58,8 +58,8 @@ class FastReports():
         Finally adds an extra column with count 1 to make it easier on the cognos dashboard to make opeartions on the data'''
         filepath_ = self.filepath_tasks
         df_Back = pd.read_excel(filepath_,sheet_name="Tasks")
-        df_Back = df_Back.rename(columns={'DSL/SUPERVISOR (NAME)':'DSL','ROBOT NUMBER':'ROBOT_NUMBER','AUTOMATION TYPE':'AUTOMATION_TYPE','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS'})
-        df_Back = df_Back.loc[:,['TASK ID','CERTIFIED','DSL','STATUS','ROBOT_NUMBER','TITLE','AUTOMATION_TYPE','REGIONS','SAVING HS']]
+        df_Back = df_Back.rename(columns={'DSL/SUPERVISOR (NAME)':'DSL','ROBOT NUMBER':'ROBOT_NUMBER','UPLOAD DATA SYSTEMS':'UPLOAD_DATA_SYSTEMS','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS'})
+        df_Back = df_Back.loc[:,['TASK ID','CERTIFIED','DSL','STATUS','ROBOT_NUMBER','TITLE','UPLOAD_DATA_SYSTEMS','REGIONS','SAVING HS']]
         df_Back = df_Back.loc[df_Back['STATUS']=="Ready for development"]
         df_Back['CERTIFIED'] = df_Back['CERTIFIED'].apply(lambda x: str(x))
         df_Back['CERTIFIED'] = df_Back['CERTIFIED'].apply(lambda x: x[4:7]+" "+x[11:15])
@@ -76,9 +76,9 @@ class FastReports():
         Finally adds an extra column with count 1 to make it easier on the cognos dashboard to make opeartions on the data'''
         filepath_ = self.filepath_tasks
         df_Spec  = pd.read_excel(filepath_,sheet_name="Tasks")
-        df_Spec = df_Spec.rename(columns={'DSL/SUPERVISOR (NAME)':'DSL','DSL/SUPERVISOR (EMAIL)':'DSL EMAIL','ROBOT NUMBER':'ROBOT_NUMBER','AUTOMATION TYPE':'AUTOMATION_TYPE',
+        df_Spec = df_Spec.rename(columns={'DSL/SUPERVISOR (NAME)':'DSL','DSL/SUPERVISOR (EMAIL)':'DSL EMAIL','ROBOT NUMBER':'ROBOT_NUMBER','UPLOAD DATA SYSTEMS':'UPLOAD_DATA_SYSTEMS',
                 'MANUAL EXECUTION DURATION (hours per year)':'SAVING HS','LOCATIONS OF MANUAL EXECUTION':'LOCATIONS'})
-        df_Spec = df_Spec.loc[:,['TASK ID','CERTIFIED','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','AUTOMATION_TYPE','LOCATIONS','SAVING HS']]
+        df_Spec = df_Spec.loc[:,['TASK ID','CERTIFIED','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','UPLOAD_DATA_SYSTEMS','LOCATIONS','SAVING HS']]
         df_Spec = df_Spec.loc[df_Spec['STATUS']=="Specification"]
         df_Spec['CERTIFIED'] = df_Spec['CERTIFIED'].apply(lambda x: str(x))
         df_Spec['CERTIFIED'] = df_Spec['CERTIFIED'].apply(lambda x: x[4:7]+" "+x[11:15])
@@ -96,9 +96,9 @@ class FastReports():
         Finally adds an extra column with count 1 to make it easier on the cognos dashboard to make opeartions on the data'''
         filepath_age= self.filepath_master
         df_Val = pd.read_excel(filepath_age,sheet_name="Versions")
-        df_Val = df_Val.rename(columns={'CREATED BY (NAME)':'DSL','CREATED BY (EMAIL)':'DSL EMAIL','ROBOT NUMBER':'ROBOT_NUMBER','AUTOMATION TYPE':'AUTOMATION_TYPE',
+        df_Val = df_Val.rename(columns={'CREATED BY (NAME)':'DSL','CREATED BY (EMAIL)':'DSL EMAIL','ROBOT NUMBER':'ROBOT_NUMBER','UPLOAD DATA SYSTEMS':'UPLOAD_DATA_SYSTEMS',
                         'MANUAL EXECUTION DURATION (hours per year)':'SAVING HS','LOCATIONS OF MANUAL EXECUTION':'LOCATIONS'})
-        df_Val = df_Val.loc[:,['VERSION ID','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','AUTOMATION_TYPE','LOCATIONS','SAVING HS']]
+        df_Val = df_Val.loc[:,['VERSION ID','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','UPLOAD_DATA_SYSTEMS','LOCATIONS','SAVING HS']]
         df_Val = df_Val.loc[df_Val['STATUS']=="Validation"]
         df_Val = df_Val.loc[df_Val['ROBOT_NUMBER'].isnull()==True]
         df_Val.drop(columns=['ROBOT_NUMBER','STATUS'],inplace=True)
@@ -136,9 +136,9 @@ class FastReports():
         filepath_ = self.filepath_tasks
         df_chg = pd.read_excel(filepath_,sheet_name="Tasks")
         df_chg = df_chg.rename(columns={'DSL/SUPERVISOR (NAME)':'DSL','DSL/SUPERVISOR (EMAIL)':'DSL EMAIL','ROBOT NUMBER':'ROBOT_NUMBER',
-                                        'AUTOMATION TYPE':'AUTOMATION_TYPE','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS',
+                                        'UPLOAD DATA SYSTEMS':'UPLOAD_DATA_SYSTEMS','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS',
                                        'LOCATIONS OF MANUAL EXECUTION':'LOCATIONS'})
-        df_chg = df_chg.loc[:,['TASK ID','ROBOT VERSION','CHANGE SUMMARY','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','AUTOMATION_TYPE','REGIONS','LOCATIONS','SAVING HS']]
+        df_chg = df_chg.loc[:,['TASK ID','ROBOT VERSION','CHANGE SUMMARY','DSL','DSL EMAIL','STATUS','ROBOT_NUMBER','TITLE','UPLOAD_DATA_SYSTEMS','REGIONS','LOCATIONS','SAVING HS']]
         df_chg = df_chg.loc[df_chg['STATUS']=="In Production"]
         df_chg = df_chg.loc[df_chg['ROBOT VERSION']>1]
         df_chg.drop(columns=['STATUS','ROBOT VERSION'],inplace=True)
@@ -254,22 +254,26 @@ class FastReports():
         df = pd.read_excel(filepath_,sheet_name="Tasks")
         df = df.rename(columns={'ROBOT NUMBER':'ROBOT_NUMBER'})
 
-        df_lindo = df.loc[:,['ORIGIN RELEASE','STATUS','ROBOT_NUMBER','TITLE','AUTOMATION TYPE','REGIONS','MANUAL EXECUTION DURATION (hours per year)','CURRENT VERSION ID']]
+        df_lindo = df.loc[:,['ORIGIN RELEASE','STATUS','ROBOT_NUMBER','TITLE','UPLOAD DATA SYSTEMS','REGIONS','MANUAL EXECUTION DURATION (hours per year)','CURRENT VERSION ID']]
         df_lindo = df_lindo.rename(columns={'MANUAL EXECUTION DURATION (hours per year)':'SAVING HS','CURRENT VERSION ID':'VERSION ID'})
 
         df4 = df_lindo
         df4['ORIGIN RELEASE'] = df4['ORIGIN RELEASE'].apply(lambda x: str(x))
-        df4['QUARTER'] = df4['ORIGIN RELEASE'].apply(lambda x: x[4:7]+x[11:15])
+        df4['QUARTER'] = df4['ORIGIN RELEASE'].apply(lambda x: x[0:4]+x[5:7])
 
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q21' if x == 'Mar2021' else '1Q21' if x == 'Feb2021' else '1Q21' if x == 'Jan2021' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q21' if x == 'Jun2021' else '2Q21' if x == 'May2021' else '2Q21' if x == 'Apr2021' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q21' if x == 'Sep2021' else '3Q21' if x == 'Aug2021' else '3Q21' if x == 'Jul2021' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q21' if x == 'Dec2021' else '4Q21' if x == 'Nov2021' else '4Q21' if x == 'Oct2021' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q22' if x == 'Jan2022' else '1Q22' if x == 'Feb2022' else '1Q22' if x == 'Mar2022' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q22' if x == 'Jun2022' else '2Q22' if x == 'May2022' else '2Q22' if x == 'Apr2022' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q22' if x == 'Sep2022' else '3Q22' if x == 'Aug2022' else '3Q22' if x == 'Jul2022' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q22' if x == 'Dec2022' else '4Q22' if x == 'Nov2022' else '4Q22' if x == 'Oct2022' else x)
-        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q23' if x == 'Mar2023' else '1Q23' if x == 'Feb2023' else '1Q23' if x == 'Jan2023' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q21' if x == '202103' else '1Q21' if x == '202102' else '1Q21' if x == '202101' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q21' if x == '202106' else '2Q21' if x == '202105' else '2Q21' if x == '202104' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q21' if x == '202109' else '3Q21' if x == '202108' else '3Q21' if x == '202107' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q21' if x == '202112' else '4Q21' if x == '202111' else '4Q21' if x == '202110' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q22' if x == '202201' else '1Q22' if x == '202202' else '1Q22' if x == '202203' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q22' if x == '202206' else '2Q22' if x == '202205' else '2Q22' if x == '202204' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q22' if x == '202209' else '3Q22' if x == '202208' else '3Q22' if x == '202207' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q22' if x == '202212' else '4Q22' if x == '202211' else '4Q22' if x == '202210' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '1Q23' if x == '202303' else '1Q23' if x == '202302' else '1Q23' if x == '202301' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '2Q23' if x == '202306' else '2Q23' if x == '202305' else '2Q23' if x == '202304' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '3Q23' if x == '202309' else '3Q23' if x == '202308' else '3Q23' if x == '202307' else x)
+        df4['QUARTER'] = df4['QUARTER'].apply(lambda x: '4Q23' if x == '202312' else '4Q23' if x == '202311' else '4Q23' if x == '202310' else x)
+
 
 
         df5 = df4.loc[df4['QUARTER']==quarter,]
@@ -324,6 +328,7 @@ class FastReports():
         df5.loc[df5['ROBOT_NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA128",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA140",'DEVELOPERS']="Ezequiel Ferlauto"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA190",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA178",'DEVELOPERS']="Bruno Secchiari"
@@ -340,7 +345,7 @@ class FastReports():
 
         df5['Count']=1
                 
-        df5 = df5.loc[:,['Manager','DEVELOPERS','Count','SAVING HS','QUARTER','ROBOT_NUMBER','TITLE','STATUS','AUTOMATION TYPE','REGIONS']]
+        df5 = df5.loc[:,['Manager','DEVELOPERS','Count','SAVING HS','QUARTER','ROBOT_NUMBER','TITLE','STATUS','UPLOAD DATA SYSTEMS','REGIONS']]
         df5 = df5.rename(columns={'DEVELOPERS':'Developer'})
         df5.to_excel(r"C:\Users\016434613\Desktop\Delivery Report.xlsx", index=False)
 
@@ -349,7 +354,7 @@ class FastReports():
 
         df_Versions = pd.read_excel(filepath_,sheet_name="Versions")
 
-        df_Versions = df_Versions.loc[:,['VERSION ID','TASK ID','TASK VERSION (NUMBER)','STATUS','ROBOT NUMBER','TITLE','AUTOMATION TYPE','LOCATIONS OF MANUAL EXECUTION','READY FOR DEVELOPMENT']]
+        df_Versions = df_Versions.loc[:,['VERSION ID','TASK ID','TASK VERSION (NUMBER)','STATUS','ROBOT NUMBER','TITLE','UPLOAD DATA SYSTEMS','LOCATIONS OF MANUAL EXECUTION','READY FOR DEVELOPMENT']]
         df_Versions = df_Versions.rename(columns={'LOCATIONS OF MANUAL EXECUTION':'LOCATIONS'})
         df_Versions = df_Versions.loc[df_Versions['TASK VERSION (NUMBER)']==1]
         df_Versions = df_Versions.loc[df_Versions['STATUS']!="Discarded"]
@@ -478,7 +483,7 @@ class FastReports():
 
         df_Versions = pd.read_excel(filepath_,sheet_name="Versions")
 
-        df_Versions = df_Versions.loc[:,['VERSION ID','TASK ID','TASK VERSION (NUMBER)','STATUS','ROBOT NUMBER','TITLE','AUTOMATION TYPE','LOCATIONS OF MANUAL EXECUTION','READY FOR DEVELOPMENT']]
+        df_Versions = df_Versions.loc[:,['VERSION ID','TASK ID','TASK VERSION (NUMBER)','STATUS','ROBOT NUMBER','TITLE','UPLOAD DATA SYSTEMS','LOCATIONS OF MANUAL EXECUTION','READY FOR DEVELOPMENT']]
         df_Versions = df_Versions.rename(columns={'LOCATIONS OF MANUAL EXECUTION':'LOCATIONS'})
         df_Versions = df_Versions.loc[df_Versions['TASK VERSION (NUMBER)']>1]
         df_Versions = df_Versions.loc[df_Versions['STATUS']!="Discarded"]
@@ -605,7 +610,7 @@ class FastReports():
         df_Ideas = pd.read_excel(filepath_,sheet_name="Ideas")
 
         df_Ideas = df_Ideas.rename(columns={'CREATED BY (NAME)':'DSL','CREATED BY (EMAIL)':'DSL MAIL','LOCATIONS OF MANUAL EXECUTION':'LOCATIONS','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS'})
-        df_Ideas = df_Ideas.loc[:,['IDEA ID','CREATED','DSL','DSL MAIL','STATUS','TITLE','AUTOMATION TYPE','LOCATIONS','SAVING HS']]
+        df_Ideas = df_Ideas.loc[:,['IDEA ID','CREATED','DSL','DSL MAIL','STATUS','TITLE','UPLOAD DATA SYSTEMS','LOCATIONS','SAVING HS']]
         #df_Ideas['CREATED'] = df_Ideas['CREATED'].apply(lambda x: str(x))
         #df_Ideas['CREATED'] = df_Ideas['CREATED'].apply(lambda x: x[4:7]+" "+x[11:15])
         df_Ideas['CREATED'] = "Not SDA"
@@ -624,7 +629,7 @@ class FastReports():
         df_Sdideas = pd.read_excel(filepath_,sheet_name="Ideas")
 
         df_Sdideas = df_Sdideas.rename(columns={'CREATED BY (NAME)':'DSL','CREATED BY (EMAIL)':'DSL MAIL','LOCATIONS OF MANUAL EXECUTION':'LOCATIONS','MANUAL EXECUTION DURATION (hours per year)':'SAVING HS'})
-        df_Sdideas = df_Sdideas.loc[:,['IDEA ID','CREATED','DSL','DSL MAIL','STATUS','TITLE','AUTOMATION TYPE','LOCATIONS','SAVING HS']]
+        df_Sdideas = df_Sdideas.loc[:,['IDEA ID','CREATED','DSL','DSL MAIL','STATUS','TITLE','UPLOAD DATA SYSTEMS','LOCATIONS','SAVING HS']]
         df_Sdideas['CREATED'] = "SDA"
         df_Sdideas = df_Sdideas.loc[df_Sdideas['STATUS']=="Submitted"]
         df_Sdideas.drop(columns=['STATUS'],inplace=True)

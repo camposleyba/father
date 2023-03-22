@@ -21,5 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('search/', views.searching, name='searching'),
+    path('searcherr/<int:itemid>', views.searchingerr, name='searchingerr'),
+    path('viewtorrent/<int:itemid>', views.viewtorrent, name='viewtorrent'),
+    path('viewtorrent/<int:itemid>/deleted', views.deleteTorrent, name='deleteTorrent'),
+    path('viewtorrent/<int:itemid>/saved', views.saveTorrent, name='saveTorrent'),
+    path('search/<int:ik>/<name>', views.search_magnetLink, name='search_magnetLink'),
+    path('obtainmagneturl/<int:itemid>/<link>', views.obtainmagneturl, name='obtainmagneturl'),
+    path('dropboxupload/<int:itemid>', views.dropboxupload, name='dropboxupload'),
     path('torrentsearch/', views.search_movie_series, name='search_movie_series'),
 ]

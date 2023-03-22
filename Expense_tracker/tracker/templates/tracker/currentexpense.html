@@ -1,0 +1,48 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card" style="width: 45.5rem;">
+              <div class="card-header">
+                        {% if expenses %}
+                             <h2>{{ expenses.count }} Current Expense{{ expenses.count|pluralize }}</h2>
+                        {% else %}
+                                       Current Expenses
+                        {% endif %}
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                {% if budget %}
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="offset-md-1"><b>Remaining budget:</b> {{ budget|floatformat:2 }}
+                {% endif %}</div></div><div class="col-md-6">{% if spent %}  <div class="offset-md-3"><b>Total spent:</b> {{ spent|floatformat:2 }}</div></div></div>
+                {% endif %}   
+                </li>
+              </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+        {% if expenses %}
+            <div class="list-group">
+                {% for expense in expenses %}
+                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:50 }}{% endif %} | <b>{{ expense.monto }}</b></a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h2>Looks like you don't have any todos! Nice work.</h2>
+            <br>
+            <a role="button" class="btn btn-primary" href="{% url 'tracker' %}">New Expense</a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

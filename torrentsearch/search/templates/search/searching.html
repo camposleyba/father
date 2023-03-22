@@ -13,6 +13,16 @@
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
                 </div>
+                {% if exists %}
+                <div class="text-center">
+                    <div class="form-group">
+                        <form method="POST" action="{% url 'viewtorrent' itemid %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Check it</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
             {% endif %}
             <form method="POST" action="{% url 'search_movie_series' %}">
                 {% csrf_token %}
