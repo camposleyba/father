@@ -335,10 +335,14 @@ class FastReports():
         df5.loc[df5['ROBOT_NUMBER']=="ODA186",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA181",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA169",'DEVELOPERS']="Bruno Secchiari"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA182",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA175",'DEVELOPERS']="Peter Blahut"
         df5.loc[df5['ROBOT_NUMBER']=="ODA184",'DEVELOPERS']="Peter Blahut"
         df5.loc[df5['ROBOT_NUMBER']=="ODA185",'DEVELOPERS']="Peter Blahut"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA193",'DEVELOPERS']="Peter Blahut"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA194",'DEVELOPERS']="Peter Blahut"
         
+        df5.loc[df5['DEVELOPERS']=="Michal Bezák",'Manager']="Andrej Csiaki"
 
 
 
@@ -475,6 +479,8 @@ class FastReports():
         df_Merge.loc[df_Merge['DEVELOPERS']=="Michele Lobina, Richard Nerodolík",'Manager']="Andrej Csiaki"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Terézia Straková",'Manager']="Andrej Csiaki"
         df_Merge.loc[df_Merge['DEVELOPERS']=="Nikolaj Kniha",'Manager']="Andrej Csiaki"
+
+        df_Merge.loc[df_Merge['DEVELOPERS']=="Michal Bezák",'Manager']="Andrej Csiaki"
         
         df_Merge.to_excel(r"C:\Users\016434613\Desktop\dev over90.xlsx", index=False)
 
