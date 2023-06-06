@@ -20,7 +20,7 @@ class FastReports():
     filepath_master=r"C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx"
     filepath_ideas=r"C:\Users\016434613\Downloads\progress_sd_tasks_master_report.xlsx"
     filepath_spec=r"C:\Users\016434613\Desktop\Specification.xlsx"
-    download_master_box=r"C:\Users\016434613\Box\ATA721 - Progress Master Report Download\Master Report 2023 1Q"
+    download_master_box=r"C:\Users\016434613\Box\RPA003 - Progress Master Report Download\Master Report 2023 2Q"
     spec_completed=False
     quarter='3Q22'
 
@@ -329,6 +329,7 @@ class FastReports():
         df5.loc[df5['ROBOT_NUMBER']=="ODA128",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA140",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA190",'DEVELOPERS']="Ezequiel Ferlauto"
+        df5.loc[df5['ROBOT_NUMBER']=="ODA137",'DEVELOPERS']="Ezequiel Ferlauto"
         df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
         df5.loc[df5['ROBOT_NUMBER']=="ODA178",'DEVELOPERS']="Bruno Secchiari"
