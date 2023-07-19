@@ -1,3 +1,4 @@
+# comment es con ctrl + }
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TodoForm, categoryForm
 from .models import Todo

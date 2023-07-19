@@ -5,7 +5,7 @@ class Expense(models.Model):
     quarter = models.CharField(max_length=2)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    created = models.DateField(auto_now=True)
+    created = models.DateField(auto_now_add=True)
     monto = models.DecimalField(max_digits=7, decimal_places=2, default=00000.00)
     rendido = models.BooleanField(default=False)
     

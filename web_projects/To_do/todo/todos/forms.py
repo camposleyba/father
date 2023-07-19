@@ -10,6 +10,8 @@ class TodoForm(ModelForm):
 
 class categoryForm(forms.Form):
     choices=[('Chatbot','Chatbot'),
+    ('SAP4HANA','SAP4HANA'),
+    ('Presentación Usina Arte','Presentación Usina Arte'),
     ('Delivery 1Q23','Delivery 1Q23'),
     ('Delivery 2Q23','Delivery 2Q23'),
     ('Delivery 3Q23','Delivery 3Q23'),
@@ -22,8 +24,9 @@ class categoryForm(forms.Form):
     ('Iteration RPA' ,'Iteration RPA'),
     ('Iteration WBA','Iteration WBA'),
     ('1on1 Fran','1on1 Fran'),
-    ('Daily Todos','Daily Todos'),
     ('1on1 Chris','1on1 Chris'),
+    ('1on1 Melissa','1on1 Melissa'),
+    ('Daily Todos','Daily Todos'),
     ('Must Watch Series','Must Watch Series'),
     ('Juana','Juana')]
 
