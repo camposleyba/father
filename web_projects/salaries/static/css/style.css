@@ -1,0 +1,14 @@
+body {
+  font-family: 'Oswald', sans-serif !important;
+}
+
+input[type='text'] {
+
+  box-sizing: border-box;
+}
+
+input[type='number'] {
+
+  box-sizing: border-box;
+
+}
