@@ -241,7 +241,7 @@ class FastReports():
         if os.path.exists(checkfilepath):
             subprocess.run("del /f C:\\Users\\016434613\\Downloads\\progress_dt_tasks_master_report.xlsx", shell=True, capture_output=True)
 
-        all_files = glob.glob(download_master_box+"\\Master Progress*.xlsx")
+        all_files = glob.glob(download_master_box+"\\MR*.xlsx")
         all_files = sorted(all_files, reverse=True)
         
         copyfile(all_files[0],r'C:\Users\016434613\Downloads\progress_dt_tasks_master_report.xlsx')
@@ -290,13 +290,8 @@ class FastReports():
 
         df5 = df5.merge(df_Development, on="VERSION ID", how="left")
 
-        df5.loc[df5['VERSION ID']=='6329f38e3d3f2f2ee3ebc99e','DEVELOPERS']='Dario Cesar Atach'
-        df5.loc[df5['VERSION ID']=='633549dbaec8d48dde23dff8','DEVELOPERS']='Marián Chrást'
-        df5.loc[df5['VERSION ID']=='633823c7ffd0c408ad843990','DEVELOPERS']='Branislav Podoba'
-        df5.loc[df5['ROBOT_NUMBER']=='ATA053','DEVELOPERS']='Milan Babčanec'
-        df5.loc[df5['ROBOT_NUMBER']=='ATA712','DEVELOPERS']='Richard Hantke'
-        df5.loc[df5['ROBOT_NUMBER']=='WBA012','DEVELOPERS']='Rodrigo Maximiliano Cremella'
         
+        df5['DEVELOPERS'] = df5['DEVELOPERS'].fillna(value='x')
 
         pos = []
         valor = []
@@ -318,35 +313,10 @@ class FastReports():
         for t in range(len(pos)):
             df5['DEVELOPERS'][pos[t]]=valor[t]
 
-        df5.loc[df5['DEVELOPERS']=="Andre Daniel Rodrigues",'Manager']="Andrej Csiaki"
-        df5.loc[df5['DEVELOPERS']=="Martin Nicolas Benitez Alegre",'Manager']="Martin Campos"
-        df5.loc[df5['DEVELOPERS']=="Tomas Funes",'Manager']="Martin Campos"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA139",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA149",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA146",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA147",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA144",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA128",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA140",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA190",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA137",'DEVELOPERS']="Ezequiel Ferlauto"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA143",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA111",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA178",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA186",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA181",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA169",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA182",'DEVELOPERS']="Bruno Secchiari"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA175",'DEVELOPERS']="Peter Blahut"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA184",'DEVELOPERS']="Peter Blahut"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA185",'DEVELOPERS']="Peter Blahut"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA193",'DEVELOPERS']="Peter Blahut"
-        df5.loc[df5['ROBOT_NUMBER']=="ODA194",'DEVELOPERS']="Peter Blahut"
         
         df5.loc[df5['DEVELOPERS']=="Michal Bezák",'Manager']="Andrej Csiaki"
-
-
-
+        df5.loc[df5['DEVELOPERS']=="Ezequiel Ricardo Ferlauto",'Manager']="Martin Campos"
+        
 
         df5['Count']=1
                 

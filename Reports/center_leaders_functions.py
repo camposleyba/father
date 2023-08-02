@@ -19,7 +19,7 @@ class centerLeader():
 		emp_type = []
 		role = []
 
-		request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+self.cnum+"/teamResolved")
+		request = req.urlopen("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/"+self.cnum+"/teamResolved")
 		datos = request.read().decode()
 		dictdatos = json.loads(datos)
 		reports = dictdatos['content']['functional']['reports']
@@ -68,7 +68,7 @@ class centerLeader():
 		df_cl['EmpType'] = emp_type
 		df_cl['Job_title'] = role
 
-		r = requests.get("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+self.cnum+"/profile_combined")
+		r = requests.get("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/"+self.cnum+"/profile_combined")
 		dictdatos = r.json()
 
 		location = dictdatos['content']['identity_info']['content']['address']['business']['locality']
@@ -98,7 +98,7 @@ class centerLeader():
 
 		for i in range(dataframe['Reports'].size):
 			if dataframe['Serials'][i] != self.cnum:
-			    request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+dataframe['Serials'][i]+"/teamResolved")
+			    request = req.urlopen("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/"+dataframe['Serials'][i]+"/teamResolved")
 			    datos = request.read().decode()
 			    dictdatos = json.loads(datos)
 			    try:
@@ -151,7 +151,7 @@ class centerLeader():
 		role_ = []
 
 		for i in range(dataframedt['Reports'].size):
-		    request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+dataframedt['Serials'][i]+"/teamResolved")
+		    request = req.urlopen("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/"+dataframedt['Serials'][i]+"/teamResolved")
 		    datos = request.read().decode()
 		    dictdatos = json.loads(datos)
 		    try:
@@ -202,7 +202,7 @@ class centerLeader():
 		serial_list = df['Serials'].tolist()
 		list_ = []
 		for s in serial_list:
-			request = req.urlopen("https://unified-profile-api.us-south-k8s.intranet.ibm.com/v3/profiles/"+s+"/teamResolved")
+			request = req.urlopen("https://w3-unifiedprofile-api.dal1a.cirrus.ibm.com/v3/profiles/"+s+"/teamResolved")
 			datos = request.read().decode()
 			dictdatos = json.loads(datos)
 			try:
