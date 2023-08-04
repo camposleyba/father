@@ -2,7 +2,11 @@
 
 {% block content %}
 
-<div class="card text-dark bg-light mb-3 mx-auto" style="max-width: 28rem;">        
+
+<div class="card text-dark bg-light mb-3 mx-auto" style="max-width: 28rem;">
+            {% if error %}
+            <h3 class="m-2 text-danger">{{ error }}</h3>
+            {% endif %} 
         <form method="POST" action="{% url 'calculateincrease' employee.id %}">
             {% csrf_token %}
             <div class="row m-3">
@@ -65,22 +69,26 @@
             </div>
         	</div>
             <div class="row m-2">
-            <div class="col-sm-5">
+            <div class="col-sm-6">
             <div class="form-floating">
+ 
             {% if percen %}
-                <input type="number" name="percentage" class="form-control form-control-sm" id="percentage" step="0.01" value="{{ percen }}">
+                <input type="number" name="percentage" class="form-control form-control-sm" id="percentage" step="0.01" value="{{ percen }}" required>
                 <label for="percentage">Percentage Increase</label>
+                <span style="position: absolute; float: right; bottom: 10px; right: 10px; display:inline-block;">
+                        <button type="submit" class="btn btn-secondary"><i class="fa fa-calculator"></i></a>
+                </span>
                 </div>
                 </div>
             {% else %}
-                <input type="number" name="percentage" class="form-control form-control-sm" id="percentage" step="0.01">
+                <input type="number" name="percentage" class="form-control form-control-sm" id="percentage" step="0.01" required>
                 <label for="percentage">Percentage Increase</label>
+                <span style="position: absolute; float: right; bottom: 10px; right: 10px;">
+                        <button type="submit" class="btn btn-secondary"><i class="fa fa-calculator"></i></a>
+                </span>
                 </div>
                 </div>
             {% endif %}
-                <div class="col-sm-1">
-                        <button type="submit" style="position: absolute; bottom: 77px; left: 180px;" class="btn btn-secondary"><i class="fa fa-calculator"></i></a>
-                </div>
 
             <div class="col-sm-6">
             {% if new_salary %}
@@ -97,7 +105,7 @@
             </div>
             </div>
             <div class="row m-2">
-            <div class="col-sm-6">
+            <div class="col-sm-8">
             {% if new_salary_usd %}
             <div class="form-floating">
                 <input type="number" name="new_salary_usd" class="form-control form-control-sm" id="new_salary_usd" step="0.01" value="{{ new_salary_usd }}" readonly>
@@ -115,7 +123,7 @@
             <form method="POST" action="{% url 'saveIncrease' employee.id new_salary %}">
                 {% csrf_token %}
             <div class="col-sm-1">
-                <button type="submit" style="position: absolute; left: 220px; bottom: 10px;" class="btn btn-success"><i class="fa fa-check"></i></a>
+                <button type="submit" style="position: absolute; float: right; right: 175px; bottom: 15px;" class="btn btn-success"><i class="fa fa-check"></i></a>
             </div>
             </form>
             {% endif %}

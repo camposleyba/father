@@ -113,19 +113,29 @@ def calculateincrease(request, pk):
 			midp = mid_exchrate.objects.get(band='B8')
 			exchg = midp.exch_rate
 		percen = request.POST.get('percentage')
-		new_salary = round((float(employee.salary_monthly) * (1+(float(percen)/100))),2)
-		midpoint = float(midp.midpoint)
-		new_pmr = round((( new_salary / midpoint)*100),2)
-		exchgs = float(exchg) 
-		new_salary_usd = round((new_salary / exchgs),2)
-		context = {
-			'employee': employee,
-			'new_salary': new_salary,
-			'new_pmr': new_pmr,
-			'new_salary_usd': new_salary_usd,
-			'percen': percen
-		}
-		return render(request, 'salaryincrease.html', context)
+		try:
+			float(percen)
+			new_salary = round((float(employee.salary_monthly) * (1+(float(percen)/100))),2)
+			midpoint = float(midp.midpoint)
+			new_pmr = round((( new_salary / midpoint)*100),2)
+			exchgs = float(exchg) 
+			new_salary_usd = round((new_salary / exchgs),2)
+			context = {
+				'employee': employee,
+				'new_salary': new_salary,
+				'new_pmr': new_pmr,
+				'new_salary_usd': new_salary_usd,
+				'percen': percen
+			}
+			return render(request, 'salaryincrease.html', context)
+		except ValueError:
+			error = "Please select a valid percentage increase"
+			context = {
+				'employee': employee,
+				'error': error
+				}
+			return render(request, 'salaryincrease.html', context)
+
 
 def saveIncrease(request, pk, salary):
 	employee = get_object_or_404(Employee, pk=pk)

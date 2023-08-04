@@ -67,17 +67,14 @@
             </div>
             </div>
             <div class="row m-2">
-            <div class="col-sm-5">
-                <div class="form-floating">
-
-                <input type="number" name="salary_monthly" class="form-control form-control-sm" id="salary_monthly" value="{{ employee.salary_monthly }}" step="0.01" readonly>
- 
-                <label for="salary_monthly">Salary Monthly</label>
- 
+            <div class="col-sm-6">
+            <div class="form-floating">
+            <input type="number" name="salary_monthly" class="form-control form-control-sm" id="salary_monthly" value="{{ employee.salary_monthly }}" step="0.01" readonly>
+            <label for="salary_monthly">Salary Monthly</label>
+             <span style="position: absolute; float: right; bottom: 10px; right: 10px;">
+                <a href="{% url 'salaryIncrease' employee.id %}" class="btn btn-warning" ><i class="fa fa-pencil"></i></a>
+            </span>
             </div>
-            </div>
-            <div class="col-sm-1">
-                <a href="{% url 'salaryIncrease' employee.id %}" class="btn btn-warning" style="position: relative; float: right; left: 10px; top: 15px;"><i class="fa fa-pencil"></i></a>
             </div>
             <div class="col-sm-6">
             <div class="form-floating">
@@ -87,26 +84,20 @@
             </div>
             </div>
             <div class="row m-2">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
             <div class="form-floating">
-                
                 <input type="text" name="title" class="form-control form-control-sm" id="title" value ="{{ employee.title }}" required>
                 <label for="title">Degree</label>
             </div>
+            <span style="position: absolute; float: right; bottom: 15px; right: 80px;">
+                <button type="submit" class="btn btn-secondary" ><i class="fa fa-plus"></i></button>
+            </span>
+            <span style="position: absolute; float: right; bottom: 15px; right: 40px;">
+                <a role="button" class="btn btn-danger" href="{% url 'employeeDelete' employee.id %}"><i class="fa fa-trash"></i></a>
+            </span>
+            </div>
+            </div>
 
-            </div>
-            <div class="col-sm-1">
-                <button type="submit" class="btn btn-secondary" style="position: relative; float: right; top: 20px; left: 5px;"><i class="fa fa-plus"></i></button>
-            </div>
-            <div class="col-sm-1">
-                <a role="button" class="btn btn-danger" href="{% url 'employeeDelete' employee.id %}" style="position: relative; float: right; top: 20px; left: 10px;"><i class="fa fa-trash"></i></a>
-            </div>
-            </div>
-            <div class="mb-2">
-            <div class="row mx-auto">
-
-            </div>
-            </div>
         
         </form>
         </div>
