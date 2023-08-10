@@ -1,0 +1,111 @@
+{% extends 'display/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<br>
+	<div class="mx-5">
+		<div class="row">
+		<div class="mx-auto card text-dark bg-light" style="max-width: 40rem;">
+			<div class="card-header"><h4>Award Budget: </h4><h4 class="text-danger">{{ budget }}</h4></div>
+			<div class="card-body">
+				{% if budgetq < 0 %}
+					<h5><b>{{ quarter }}</b> budget: <b class="alert alert-danger">{{ budgetq }}</b></h5>
+				{% else %}
+					<h5><b>{{ quarter }}</b> budget: <b class="text-success">{{ budgetq }}</b></h5>
+				{% endif %}
+			</div>
+		</div>
+		</div>
+		<br>
+		<div class="mx-auto card text-dark bg-light">
+			<div class="card-body">
+				<div class="d-flex justify-content-around-start">
+					<form method="POST" action="#">{% csrf_token %}
+						<button class="ms-2 btn btn-secondary btn-sm" type="submit" disabled>Clean Table</button>
+					</form>
+					<div class="dropdown">
+					  <button class="ms-2 btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Q view
+					  </button>
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" name="mgrlist">
+				    		<a href="{% url 'q1view' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">1Q</button></li></a>
+				    		<a href="{% url 'q2view' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">2Q</button></li></a>
+				    		<a href="{% url 'q3view' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">3Q</button></li></a>
+				    		<a href="{% url 'q4view' %}" style="text-decoration:none;"><li><button class="dropdown-item" type="button">4Q</button></li></a>
+						  </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="card text-dark bg-light mb-3" style="max-width: 80rem;">
+			
+				<table class="table table-borderless table-hover border-light">
+					<thead class="table-secondary">
+						<th scope="col" class="small">Developer</th>
+						<th scope="col" class="small" style="text-align:center;">Goal Award</th>
+						<th scope="col" class="small" style="text-align:center;">Wizard Award</th>
+						<th scope="col" class="small" style="text-align:center;">Total</th>
+					</thead>
+					<tbody>
+						{% for d in data %}
+							<td class="small">{{ d.developer }}</td>
+							<td class="small" style="text-align:center;">{{ d.goalamount }}</td>
+							<td class="small" style="text-align:center;">{{ d.wizardamount }}</td>
+							<td class="small" style="text-align:center;"><b class="text-success">{{ d.totalamount }}</b></td>
+					</tbody>
+						{% endfor %}
+					<tfoot class="table-secondary">
+						<th class="small">Total</th>
+						<th class="small"></th>
+						<th class="small"></th>
+						<th class="small" style="text-align:center;"><b class="alert alert-success text-success">{{ sumatotal }}</b></th>
+					</tfoot>		
+				</table>
+	
+		</div>
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="mx-auto card text-dark bg-light" style="max-width: 16rem; height:9rem;">
+				  <div class="card-header"><b>1Q - Free day</b></div>
+				  <div class="card-body">
+				    	<ul><li></li>
+						</ul>
+				  </div>
+				</div>
+				<div class="mx-auto card text-dark bg-light" style="max-width: 16rem; height:9rem;">
+				  <div class="card-header"><b>2Q - Free day</b></div>
+				  <div class="card-body">
+				    	<ul>
+				    		<li></li>
+				    	</ul>
+				  </div>
+				</div>
+				<div class="mx-auto card text-dark bg-light" style="max-width: 16rem; height:9rem;">
+				  <div class="card-header"><b>3Q - Free day</b></div>
+				  <div class="card-body">
+				    	<ul>
+				    		<li></li>
+				    	</ul>
+				  </div>
+				</div>
+				<div class="mx-auto card text-dark bg-light" style="max-width: 16rem; height:9rem;">
+				  <div class="card-header"><b>4Q - Free day</b></div>
+				  <div class="card-body">
+				    	<ul>
+				    		<li></li>
+				    	</ul>
+				  </div>
+				</div>
+			 </div>
+		</div>
+
+	</div>
+
+</div>
+
+
+{% endblock %}
