@@ -1,4 +1,0 @@
-- Usefull commands
-
-How to install with pip in a different target than the path route lib folder:
-    pip install --target=d:\somewhere\other\than\the\default package_name
