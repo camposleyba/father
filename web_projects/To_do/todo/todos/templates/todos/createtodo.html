@@ -1,0 +1,63 @@
+{% extends 'todos/base.html' %}
+
+{% block content %}
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>New Todo</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="title">Category</label>
+                <input list="categories" class="form-control" id="category" name="category" autocomplete="off" required>
+
+                <datalist id="categories">
+                    <option value="Juana">
+                    <option value="Chatbot">
+                    <option value="SAP4HANA">
+                    <option value="Presentación Usina Arte">
+                    <option value="Delivery 1Q23">
+                    <option value="Delivery 2Q23">
+                    <option value="Delivery 3Q23">
+                    <option value="Delivery 4Q23">
+                    <option value="2H Reflections">
+                    <option value="Personal Todos">
+                    <option value="Staff Meetings">
+                    <option value="WBA staff meetings">
+                    <option value="Iteration RPA">
+                    <option value="Iteration WBA">
+                    <option value="IBM RPA">
+                    <option value="1on1 Fran">
+                    <option value="1on1 Chris">
+                    <option value="1on1 Melissa">
+                    <option value="Daily Todos">
+                    <option value="Must Watch Series">
+                </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="form-control" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="memo">Memo</label>
+                    <textarea name="memo" class="form-control" id="memo" ></textarea>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="important" class="form-check-input" id="important">
+                    <label class="form-check-label" for="important">Important</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'todos/base.html' %}
+
+{% block content %}
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Choose list category</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+	<form method="POST" action="{% url 'currenttodo' %}">
+		{% csrf_token %}
+			{{ form.as_p }}
+	<button type="submit" class="btn btn-primary">Go</button>
+	</form>
+</div>
+</div>
+
+{% endblock %}
