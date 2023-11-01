@@ -47,7 +47,7 @@ def home(request):
 		sum_pesos += float(employee.salary_monthly)
 		sum_dolar = round(sum_dolar,2)
 		sum_pesos = round(sum_pesos,2)
-		
+
 	context = {
 		'employees': employees,
 		'sum_dolar': sum_dolar,
@@ -56,7 +56,8 @@ def home(request):
 		'countb6': countb6,
 		'countoda': countoda,
 		'countrpa': countrpa,
-		'countwba': countwba
+		'countwba': countwba,
+		'exchg':exchg,
 	}
 	return render(request, 'home.html', context)
 
@@ -118,7 +119,7 @@ def calculateincrease(request, pk):
 			new_salary = round((float(employee.salary_monthly) * (1+(float(percen)/100))),2)
 			midpoint = float(midp.midpoint)
 			new_pmr = round((( new_salary / midpoint)*100),2)
-			exchgs = float(exchg) 
+			exchgs = float(exchg)
 			new_salary_usd = round((new_salary / exchgs),2)
 			context = {
 				'employee': employee,

@@ -19,7 +19,7 @@
                 <div class="col-md-6">
                     <div class="offset-md-1"><b>Remaining budget:</b> {{ budget|floatformat:2 }}
                 {% endif %}</div></div><div class="col-md-6">{% if spent %}  <div class="offset-md-3"><b>Total spent:</b> {{ spent|floatformat:2 }}</div></div></div>
-                {% endif %}   
+                {% endif %}
                 </li>
               </ul>
             </div>
@@ -33,10 +33,10 @@
         {% if expenses %}
             <div class="list-group">
                 {% for expense in expenses %}
-                
+
 
                 {% if expense.rendido %}
-                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:35 }}{% endif %} | <b>{{ expense.monto }}</b> | <span class="badge badge-success badge-pill">R</span></a>    
+                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:35 }}{% endif %} | <b>{{ expense.monto }}</b> | <button class="btn btn-outline-success btn-sm" disabled><i class="fa fa-check"></i></button></a>    
                 {% else %}
                     <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:40 }}{% endif %} | <b>{{ expense.monto }}</b></a>
                 {% endif %}
