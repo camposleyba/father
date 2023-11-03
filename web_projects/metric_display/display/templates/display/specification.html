@@ -1,0 +1,36 @@
+{% extends 'display/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+	<br>
+	<br>
+		<div class="mx-auto card text-dark bg-light" style="max-width: 30rem;">
+			<div class="card-body">
+				<h1 class="display-5 text-center">Specification</h1>
+			</div>
+		</div>
+		<br>
+
+	<!--	<div class="d-flex" style="height: 400px;">
+	  		<div class="ms-auto vr"></div>-->
+			<div class="mx-auto col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add file:</h5>
+						<form enctype="multipart/form-data" method="POST">
+							{% csrf_token %}
+						{{ form }}
+							<button class="mt-2 btn btn-secondary" type="submit">upload</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		<!--	<div class="me-auto vr"></div>
+		</div>-->
+</div>
+
+
+{% endblock %}
