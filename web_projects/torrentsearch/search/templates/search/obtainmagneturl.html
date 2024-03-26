@@ -12,9 +12,9 @@
             {% if success %}
             <div class="row">
                 <div class="col-md-4 offset-md-2">
-                    <form method="POST" action="{% url 'searching' %}">
+                    <form method="POST" action="{% url 'home' %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-info">Searching</button>
+                        <button type="submit" class="btn btn-info">Home</button>
                     </form>
                 </div>
                 <div class="col-md-4 offset-md-1">
@@ -44,5 +44,5 @@
         </div>
     </div>
 
- 
+
 {% endblock %}

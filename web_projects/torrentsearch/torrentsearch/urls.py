@@ -29,4 +29,9 @@ urlpatterns = [
     path('obtainmagneturl/<int:itemid>/<link>', views.obtainmagneturl, name='obtainmagneturl'),
     path('dropboxupload/<int:itemid>', views.dropboxupload, name='dropboxupload'),
     path('torrentsearch/', views.search_movie_series, name='search_movie_series'),
+
+    # Alternative search page, to put toggle button in future
+    path('torrentsearch_/', views.search_movie_series_, name='search_movie_series_'),
+    path('search_/<int:ik>/<name>', views.search_magnetLink_, name='search_magnetLink_'),
+    path('obtainmagneturl_/<int:itemid>/<link>', views.obtainmagneturl_, name='obtainmagneturl_'),
 ]

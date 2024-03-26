@@ -15,10 +15,17 @@
         <div class="col-md-10">
         {% if links %}
             <div class="list-group">
-                {% for link in links %}
-                    
-                    <a href="{% url 'obtainmagneturl' torrent.id link %}" class="list-group-item list-group-item-action"><b>{{ link }}</b></a>
-                {% endfor %}
+                {% if 'search_' in request.path %}
+                  {% for link in links %}
+
+                      <a href="{% url 'obtainmagneturl_' torrent.id link %}" class="list-group-item list-group-item-action"><b>{{ link }}</b></a>
+                  {% endfor %}
+                {% else %}
+                  {% for link in links %}
+
+                      <a href="{% url 'obtainmagneturl' torrent.id link %}" class="list-group-item list-group-item-action"><b>{{ link }}</b></a>
+                  {% endfor %}
+                {% endif %}
             </div>
         {% else %}
             <div class="text-center">

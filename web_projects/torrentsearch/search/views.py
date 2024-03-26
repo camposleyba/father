@@ -7,15 +7,18 @@ import json
 import dropbox
 from dropbox import DropboxOAuth2FlowNoRedirect
 import shutil
+import os
 
 
 def home(request):
 	return render(request, 'search/home.html')
 
 def searching(request):
+	choice = request.GET['flexRadioDefault']
 	form = SearchForm()
 	params = {'form':form,
-		'link':''}
+			'link':'',
+			'choice': choice}
 	return render(request, 'search/searching.html', params)
 
 
@@ -39,13 +42,13 @@ def deleteTorrent(request, itemid):
 	torrObj = get_object_or_404(Search, pk=itemid)
 	if request.method == "POST":
 		torrObj.delete()
-		return redirect('searching')
+		return redirect('home')
 
 def saveTorrent(request, itemid):
 	torrObj = get_object_or_404(Search, pk=itemid)
 	if request.method == "POST":
 		torrObj.save()
-		return redirect('searching')
+		return redirect('home')
 
 def search_movie_series(request):
 	if request.method == 'POST':
@@ -111,7 +114,7 @@ def search_movie_series_(request):
 			dbtorrent.torrentList = link
 			dbtorrent.save()
 			itemkey = dbtorrent.pk
-			return redirect('search_magnetLink',ik=itemkey,name=torr_name_og)
+			return redirect('search_magnetLink_',ik=itemkey,name=torr_name_og)
 
 
 def search_magnetLink_(request, ik, name):
@@ -173,7 +176,7 @@ def obtainmagneturl_(request, itemid, link):
 	except:
 	    req = Request("https://1377x.to/torrent/"+t, headers={'User-Agent': 'Mozilla/5.0'})
 	    web = urlopen(req)
-	try:       
+	try:
 		datos = web.read().decode()
 		sear = re.search(r"href=\"magnet:\?xt=urn:btih:",datos )
 		posini = sear.span()[0]
@@ -193,17 +196,17 @@ def obtainmagneturl_(request, itemid, link):
 def dropboxupload(request, itemid):
 	torrObj = get_object_or_404(Search, pk=itemid)
 	full_dire = "C:\\Users\\016434613\\Desktop\\"+torrObj.torrentSearch+".txt"
-	magneturl_ = torrObj.magnetlink 
+	magneturl_ = torrObj.magnetlink
 
 	with open(full_dire,"w") as outfile:
 		outfile.write(magneturl_)
 
 
-	file_from = full_dire  
+	file_from = full_dire
 	file_to = r"C:\Users\016434613\Desktop\Shared Folder"
 
 	shutil.copy(file_from, file_to)
-
+	os.remove(file_from)
 	params = {'success':'File uploaded successfully','link':magneturl_,
 		'torrObj':torrObj}
 	return render(request, 'search/obtainmagneturl.html', params)
@@ -213,7 +216,7 @@ def dropboxupload_(request, itemid):
 	torrObj = get_object_or_404(Search, pk=itemid)
 	dbapi = get_object_or_404(dropboxapitoken, pk=1)
 	full_dire = "C:\\Users\\016434613\\Desktop\\"+torrObj.torrentSearch+".txt"
-	magneturl_ = torrObj.magnetlink 
+	magneturl_ = torrObj.magnetlink
 
 	with open(full_dire,"w") as outfile:
 		outfile.write(magneturl_)
@@ -223,7 +226,7 @@ def dropboxupload_(request, itemid):
 		) as dbx:
 		print("Successfully set up client!")
 
-	file_from = full_dire  
+	file_from = full_dire
 	file_to = '/movies/'+torrObj.torrentSearch+'.txt'
 
 	f = open(file_from, 'rb')
@@ -240,7 +243,7 @@ def dropboxupload_(request, itemid):
 #	torrObj = get_object_or_404(Search, pk=itemid)
 #	dbapi = get_object_or_404(dropboxapitoken, pk=1)
 	#full_dire = "C:\\Users\\016434613\\Desktop\\"+torrObj.torrentSearch+".txt"
-	#magneturl_ = torrObj.magnetlink 
+	#magneturl_ = torrObj.magnetlink
 
 	#with open(full_dire,"w") as outfile:
 	#	outfile.write(magneturl_)
@@ -250,7 +253,7 @@ def dropboxupload_(request, itemid):
 #		) as dbx:
 #		print("Successfully set up client!")
 
-	#file_from = full_dire  
+	#file_from = full_dire
 	#file_to = '/movies/'+torrObj.torrentSearch+'.txt'
 
 	#f = open(file_from, 'rb')
@@ -265,9 +268,6 @@ def dropboxupload_(request, itemid):
 # Si quisiera armar lo del subtitulo con Opensubtitles se puede:
 # https://www.opensubtitles.org/en/search2/sublanguageid-spa,spl/moviename-ted+lasso+s01e04
 # lo de arriba es el link para hacer el query, desp hay que buscar el <a bnone [SXXEXX]>
-# usar el href de eso, y desp buscar el <a download> y usar ese href, ahora para saber 
+# usar el href de eso, y desp buscar el <a download> y usar ese href, ahora para saber
 # con que ripeo me sirve... tengo que buscarlo en otro lado...
 ###############################
-
-
-

@@ -26,6 +26,17 @@
               {% endif %}
                 <div class="row">
                 <div class="col-md-10 mt-2">
+                {% if choice == "1337x" %}
+                <form class="form-floating" method="POST" action="{% url 'search_movie_series_' %}">
+                  {% csrf_token %}
+                  <!--<label for="torrentSearch_">Search</label>-->
+                  <input type="text" class="form-control" name="torrentSearch" id="torrentSearch_" required>
+
+
+                  <button type="submit" class="btn btn-primary btn-sm" style="position: absolute; bottom: 3px; right: 20px;"><i class="fa fa-search"></i></button>
+
+                </form>
+                {% else %}
                 <form class="form-floating" method="POST" action="{% url 'search_movie_series' %}">
                   {% csrf_token %}
                   <!--<label for="torrentSearch_">Search</label>-->
@@ -35,6 +46,7 @@
                   <button type="submit" class="btn btn-primary btn-sm" style="position: absolute; bottom: 3px; right: 20px;"><i class="fa fa-search"></i></button>
 
                 </form>
+                {% endif %}
                 </div>
                 </div>
 

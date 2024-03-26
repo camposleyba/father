@@ -4,21 +4,39 @@
 
 <div class="row justify-content-center mt-5">
 	<div class="col-md-6 offset-md-1">
-	<div class="card" style="width: 25rem;">
-	  <div class="card-header">
-	    <b>Script Instructions</b>
-	  </div>
-	  <ul class="list-group list-group-flush">
-	    <li class="list-group-item">Click the task bar 'searching' option</li>
-	    <li class="list-group-item">Next page, type on the search bar whatever <b>movie</b> or <b>series</b> u want to download and click the 'search' button</li>
-	    <li class="list-group-item">Next one, u click on the <b>highlighted</b> highest possible <a href="#">link</a> to download since those are ordered by seeds amount highest to lowest</li>
-	    <li class="list-group-item">Finally, click on the 'upload' button to upload the magnet link onto your dropbox acctg</li>
-	  </ul>
+			<div class="row">
+			  <div class="col-sm-6 mb-3 mb-sm-0">
+			    <div class="card" style="width: 16rem;">
+						<div class="card-header"><h5 class="card-title">Choose your search engine</h5></div>
+			      <div class="card-body">
+
+							<form method="GET" action="{% url 'searching' %}">
+			        <ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<div class="form-group mb-0">
+									<input class="form-check-input" type="radio" id="flexRadioDefault1" name="flexRadioDefault" checked value="piratebay">
+									<label class="form-check-label" for="flexRadioDefault1">piratebay</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+							<div class="form-group mb-0">
+								<input class="form-check-input" type="radio" id="flexRadioDefault2" name="flexRadioDefault" value="1337x">
+								<label class="form-check-label" for="flexRadioDefault2">1337x</label>
+							</div>
+							</li>
+							</ul>
+							<br>
+			        <button type="submit" class="btn btn-primary btn-sm" style="position: relative;"><i class="fa fa-search"></i></button>
+						</form>
+			      </div>
+				    </div>
+			  </div>
+			</div>
+
+			</div>
 	</div>
-	<br>
-	
-</div>
-</div>
+
+
 
 
 {% endblock %}
