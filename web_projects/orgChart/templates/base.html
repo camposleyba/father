@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Team Chart{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        html {
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        html[data-theme="dark"],
+        html[data-theme="dark"] body {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+
+        html[data-theme="dark"] .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        html[data-theme="dark"] .card-title,
+        html[data-theme="dark"] .card-subtitle,
+        html[data-theme="dark"] .card-text,
+        html[data-theme="dark"] p,
+        html[data-theme="dark"] h5,
+        html[data-theme="dark"] h6,
+        html[data-theme="dark"] .navbar-brand,
+        html[data-theme="dark"] .title,
+        html[data-theme="dark"] .pill-badge {
+            color: #f8f9fa !important;
+        }
+
+        .navbar,
+        .card,
+        body {
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .toggle-btn {
+            cursor: pointer;
+        }
+
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: default;
+        }
+
+        .card:hover {
+            transform: scale(1.03) translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+
+        html[data-theme="dark"] .card:hover {
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary i {
+            transition: transform 0.2s ease;
+            color: white;
+        }
+
+        .btn-primary:hover i {
+            transform: scale(1.1);
+        }
+
+        #theme-icon {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .theme-toggle-rotate {
+            transform: rotate(180deg);
+            opacity: 0.8;
+        }
+
+        .team-count-pill {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #0d6efd !important;
+            color: white !important;
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand me-3" href="#">Team Org</a>
+
+            <!-- Search bar (only on home page) -->
+            {% if request.path == '/' %}
+            <form class="d-flex me-auto" method="GET" action="{% url 'home' %}">
+                <input class="form-control me-2" type="search" name="q" placeholder="Search talentID..."
+                    value="{{ request.GET.q }}" aria-label="Search">
+                <button class="btn btn-primary d-flex align-items-center" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+            {% endif %}
+
+            <!-- Theme toggle (far right) -->
+            <div class="ms-auto">
+                <button id="theme-toggle" class="btn btn-outline-light" title="Toggle theme">
+                    <i id="theme-icon" class="bi bi-moon-fill"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dark mode toggle script -->
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+            themeIcon.classList.add('theme-toggle-rotate');
+            setTimeout(() => themeIcon.classList.remove('theme-toggle-rotate'), 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+        });
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
+    </script>
+
+</body>
+
+</html>

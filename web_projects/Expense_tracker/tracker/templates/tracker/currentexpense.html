@@ -29,16 +29,16 @@
     </div>
     <br>
     <div class="row justify-content-center mt-5">
-        <div class="col-md-8">
+        <div class="col-md-8" style="height: 450px; overflow: scroll;">
         {% if expenses %}
             <div class="list-group">
                 {% for expense in expenses %}
 
 
                 {% if expense.rendido %}
-                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:35 }}{% endif %} | <b>{{ expense.monto }}</b> | <button class="btn btn-outline-success btn-sm" disabled><i class="fa fa-check"></i></button></a>    
+                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.expense_date|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:35 }}{% endif %} | <b>{{ expense.monto }}</b> | <button class="btn btn-outline-success btn-sm" disabled><i class="fa fa-check"></i></button></a>
                 {% else %}
-                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.created|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:40 }}{% endif %} | <b>{{ expense.monto }}</b></a>
+                    <a href="{% url 'expense' expense.id %}" class="list-group-item list-group-item-action">{{ expense.expense_date|date:"d-M" }} | <b>{{ expense.title }}</b>{% if expense.description %} | {{ expense.description|truncatechars:40 }}{% endif %} | <b>{{ expense.monto }}</b></a>
                 {% endif %}
                 {% endfor %}
             </div>

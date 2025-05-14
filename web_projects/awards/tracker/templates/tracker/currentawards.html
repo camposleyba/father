@@ -13,7 +13,7 @@
         {% if awards %}
             <div class="list-group">
                 {% for award in awards %}
-                
+
                 {% if award.bp %}
                     <a href="{% url 'viewaward' award.id %}" class="list-group-item list-group-item-action"> {{ award.quarter }} | <b> {{award.who}} </b> | <span class="badge- badge-primary badge-pill">{{ award.award_category }}</span>{% if award.description %} | {{ award.description|truncatechars:40 }}{% endif %} | <b>{{ award.monto }}</b> | <span class="badge badge-primary badge-pill">BP</span></a>    
                 {% else %}

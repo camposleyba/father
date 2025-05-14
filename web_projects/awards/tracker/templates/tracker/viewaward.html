@@ -36,6 +36,10 @@
                     <input type="checkbox" name="bp" class="form-check-input" id="bp" {% if award.bp %}checked{% endif %}>
                     <label class="form-check-label" for="rendido">Checked bluepoints</label>
                 </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="is_active" class="form-check-input" id="is_active" {% if award.is_active %}checked{% endif %}>
+                    <label class="form-check-label" for="is_active">Active</label>
+                </div>
                 <div class="form-group">
                     <label for="monto">Monto</label>
                     <input type="number" value="{{ award.monto }}" step="0.01" id="monto" name="monto" class="form-control" required>

@@ -47,31 +47,31 @@ def currentawards(request):
 			quarter="4Q"
 		case 12:
 			quarter="4Q"
-	awards = Award.objects.filter(quarter=quarter)
+	awards = Award.objects.filter(quarter=quarter, is_active=True)
 	params={'awards':awards}
 	return render(request, "tracker/currentawards.html", params)
 
 def Q1currentawards(request):
 	quarter = "1Q"
-	awards = Award.objects.filter(quarter=quarter)
+	awards = Award.objects.filter(quarter=quarter, is_active=True)
 	params={'awards':awards}
 	return render(request, "tracker/currentawards.html", params)
 
 def Q2currentawards(request):
 	quarter = "2Q"
-	awards = Award.objects.filter(quarter=quarter)
+	awards = Award.objects.filter(quarter=quarter, is_active=True)
 	params={'awards':awards}
 	return render(request, "tracker/currentawards.html", params)
 
 def Q3currentawards(request):
 	quarter = "3Q"
-	awards = Award.objects.filter(quarter=quarter)
+	awards = Award.objects.filter(quarter=quarter, is_active=True)
 	params={'awards':awards}
 	return render(request, "tracker/currentawards.html", params)
 
 def Q4currentawards(request):
 	quarter = "4Q"
-	awards = Award.objects.filter(quarter=quarter)
+	awards = Award.objects.filter(quarter=quarter, is_active=True)
 	params={'awards':awards}
 	return render(request, "tracker/currentawards.html", params)
 
@@ -90,13 +90,13 @@ def viewaward(request, award_pk):
 			form.save()
 			return redirect('currentawards')
 		except ValueError:
-			form = AwardForm(instance=expense_obj)
+			form = AwardForm(instance=aw_obj)
 			params = {'award':aw_obj,
 						'form': form,
 						'error': 'Bad data passed in. Try again'}
 			return redirect(request, 'tracker/viewaward.html', params)
 
 def awarddelete(request, award_pk):
-	aw_obj = get_object_or_404(Expense, pk=award_pk)
+	aw_obj = get_object_or_404(Award, pk=award_pk)
 	aw_obj.delete()
 	return redirect('currentawards')

@@ -50,8 +50,8 @@ def currentexpense(request):
 			quarter="4Q"
 	budg = get_object_or_404(qBudget, quarter=quarter)
 	qbudget = budg.budget * budg.tc
-	expenses = Expense.objects.filter(quarter=quarter)
-	expamt = Expense.objects.filter(quarter=quarter).aggregate(Sum('monto'))
+	expenses = Expense.objects.filter(quarter=quarter, is_active=True).order_by('expense_date')
+	expamt = Expense.objects.filter(quarter=quarter, is_active=True).aggregate(Sum('monto'))
 	exp_amt = expamt['monto__sum']
 	if exp_amt is not None:
 		qbudgetfinal = qbudget - exp_amt
@@ -65,8 +65,8 @@ def Q1expense(request):
 	quarter="1Q"
 	budg = get_object_or_404(qBudget, quarter=quarter)
 	qbudget = budg.budget * budg.tc
-	expenses = Expense.objects.filter(quarter=quarter)
-	expamt = Expense.objects.filter(quarter=quarter).aggregate(Sum('monto'))
+	expenses = Expense.objects.filter(quarter=quarter, is_active=True).order_by('expense_date')
+	expamt = Expense.objects.filter(quarter=quarter, is_active=True).aggregate(Sum('monto'))
 	exp_amt = expamt['monto__sum']
 	if exp_amt is not None:
 		qbudgetfinal = qbudget - exp_amt
@@ -80,8 +80,8 @@ def Q2expense(request):
 	quarter="2Q"
 	budg = get_object_or_404(qBudget, quarter=quarter)
 	qbudget = budg.budget * budg.tc
-	expenses = Expense.objects.filter(quarter=quarter)
-	expamt = Expense.objects.filter(quarter=quarter).aggregate(Sum('monto'))
+	expenses = Expense.objects.filter(quarter=quarter, is_active=True).order_by('expense_date')
+	expamt = Expense.objects.filter(quarter=quarter, is_active=True).aggregate(Sum('monto'))
 	exp_amt = expamt['monto__sum']
 	if exp_amt is not None:
 		qbudgetfinal = qbudget - exp_amt
@@ -95,8 +95,8 @@ def Q3expense(request):
 	quarter="3Q"
 	budg = get_object_or_404(qBudget, quarter=quarter)
 	qbudget = budg.budget * budg.tc
-	expenses = Expense.objects.filter(quarter=quarter)
-	expamt = Expense.objects.filter(quarter=quarter).aggregate(Sum('monto'))
+	expenses = Expense.objects.filter(quarter=quarter, is_active=True).order_by('expense_date')
+	expamt = Expense.objects.filter(quarter=quarter, is_active=True).aggregate(Sum('monto'))
 	exp_amt = expamt['monto__sum']
 	if exp_amt is not None:
 		qbudgetfinal = qbudget - exp_amt
@@ -110,8 +110,8 @@ def Q4expense(request):
 	quarter="4Q"
 	budg = get_object_or_404(qBudget, quarter=quarter)
 	qbudget = budg.budget * budg.tc
-	expenses = Expense.objects.filter(quarter=quarter)
-	expamt = Expense.objects.filter(quarter=quarter).aggregate(Sum('monto'))
+	expenses = Expense.objects.filter(quarter=quarter, is_active=True).order_by('expense_date')
+	expamt = Expense.objects.filter(quarter=quarter, is_active=True).aggregate(Sum('monto'))
 	exp_amt = expamt['monto__sum']
 	if exp_amt is not None:
 		qbudgetfinal = qbudget - exp_amt
@@ -169,6 +169,8 @@ def budgetdelete(request, budget_pk):
 
 def expense(request, expense_pk):
 	expense_obj = get_object_or_404(Expense, pk=expense_pk)
+	date_touse = expense_obj.expense_date
+	print(date_touse)
 	if request.method == 'GET':
 		form = ExpenseForm(instance=expense_obj) #esta sentencia me permite traer el form con la info dentro de la base de datos del objeto todo
 		params = {'expense':expense_obj,
@@ -179,6 +181,8 @@ def expense(request, expense_pk):
 		try:
 			form = ExpenseForm(request.POST, instance=expense_obj)
 			form.save()
+			expense_obj.expense_date = date_touse
+			expense_obj.save()
 			return redirect('currentexpense')
 		except ValueError:
 			form = ExpenseForm(instance=expense_obj)
@@ -191,8 +195,3 @@ def expensedelete(request, expense_pk):
 	expense_obj = get_object_or_404(Expense, pk=expense_pk)
 	expense_obj.delete()
 	return redirect('currentexpense')
-	
-
-
-
-

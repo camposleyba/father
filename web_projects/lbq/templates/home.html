@@ -11,25 +11,41 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <style>
         .form-control{
         padding: 1.375rem .75rem !important;
     }
 
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
+  <script type='text/javascript'>
+  const handleVote = (pk) => {
+    $.ajax({
+      type: 'POST',
+      url: `/votos/${pk}`,
+      data: {
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      }
+    })
+
+    const small = document.getElementById(`votado-${pk}`);
+    const number = +small.innerText.slice(-1) + 1;
+    small.innerText = small.innerText.substring(0, small.innerText.length - 1) + number
+  }
+  </script>
+
     <div class="container">
         <div class="mt-5">
         <div class="card text-white bg-dark mx-auto mb-5" style="max-width: 52rem;">
-        <h3 class="text-center mt-4 mb-4">LBQ votacion: {% now "Y" %}</h3>
+        <h3 class="text-center mt-4 mb-4">OLD PAGE</h3>
         </div>
 
         <div class="row mx-auto">
 
-            <div class="col-md-8 col-lg-8 mx-auto pt-2" style="height: 500px; overflow: scroll;">
+ <!--           <div class="col-md-8 col-lg-8 mx-auto pt-2" style="height: 500px; overflow: scroll;">
                 {% for categoria in categorias %}
                 <div class="card m-1" >
                     <div class="card-body">
@@ -37,7 +53,7 @@
                         <span style="position: relative; float: right;">
                             {% for votados in votacion %}
                                 {% if votados.categoria == categoria.categoria %}
-                                    <a href="{% url 'voto' votados.pk %}" name="nominado" data-toggle="tooltip" title="{{ votados.apodo }}"><img src="{{ votados.foto.url }}" class="img-fluid" width="50" height="50" style="border: npx;{% if votados.apodo == categoria.ganador %}border: 3px solid #FF0000;{% endif %}"></a>
+                                    <a href="#" name="nominado" id="nominado" onclick="handleVote({{ votados.pk }})" data-toggle="tooltip" title="{{ votados.apodo }}"><img src="{{ votados.foto.url }}" class="img-fluid" width="50" height="50" style="border-radius:50%; border: npx;{% if votados.apodo == categoria.ganador %}border-radius:50%; border: 3px solid #FF0000;{% endif %}"></a>
                                 {% endif %}
                             {% endfor %}
                         </span>
@@ -49,19 +65,36 @@
                         <span style="position: absolute; left: 10px; bottom: 1px;">
                             {% for votados in votacion %}
                                 {% if votados.categoria == categoria.categoria %}
-                                    <small class="text-secondary" style="font-size: small;">{{votados.apodo}}: {{ votados.cuentavotos }}</small>
+                                    <small class="text-secondary" style="font-size: small;" id="votado-{{ votados.pk }}">{{votados.apodo}}: {{ votados.cuentavotos }}</small>
                                 {% endif %}
                             {% endfor %}
                         </span>
                         {% endif %}
-                        <span style="position: relative; float: right; right: 5px;">
+                        <span style="position: relative; float: right; right: 6px; top: 6px;">
                             <a href="{% url 'reset' categoria.categoria %}" class="btn btn-dark" data-toggle="tooltip" title="reset"><i class="fa fa-arrow-left"></i></a>
-                        </span>          
+                        </span>
                     </div>
                 </div>
-                {% endfor %}   
+                {% endfor %}
             </div>
+-->
 
+       <div> 
+            <ul>
+            <p>As already communicated through various channels by CIO, driven by both financial and performance factors, CIO has initiated a program to transition our Cirrus IBM Cloud infrastructure from the current classic clusters to VPC-based clusters.</p>
+
+            <p>CRAFT has successfully migrated to the VPC-based clusters. Please bookmark the new URL -> New CRAFT URL</p>
+
+            <p>There are several benefits to this transition:</p>
+            <li> Newer and faster hardware</li>
+            <li> Improved network bandwidth (approx. 10x)</li>
+            <li> Firewall flows in seconds instead of hours</li>
+            <li> Better distribution of workloads for less noisy neighbors</li>
+            <li> Application specific domain names and certificates for greatly improved security.</li>
+            <hr>
+            <p>Any questions or concerns do not hesitate in reaching out.</p>
+        </ul>
+       </div>
     </div>
 </div>
 </body>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Projects{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Ongoing Projects</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+    <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition-all">
+        <h2 class="text-lg font-semibold text-blue-700 mb-2">"title"</h2>
+        <p><span class="font-semibold">Tower:</span> "tower"</p>
+        <p><span class="font-semibold">Assignee(s):</span> "assignees"</p>
+        <p><span class="font-semibold">Status:</span> "status"</p>
+        <p><span class="font-semibold">% Completion:</span> "percent_complete%"</p>
+        <p><span class="font-semibold">Target Date:</span> "target_date"</p>
+    </div>
+
+</div>
+{% endblock %}

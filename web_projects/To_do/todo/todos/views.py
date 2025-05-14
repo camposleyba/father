@@ -16,81 +16,63 @@ def currenttodo(request):
 		form = categoryForm(request.POST or None)
 		if form.is_valid():
 			category = form.cleaned_data.get('category')
-		todos = Todo.objects.filter(datecompleted__isnull=True, category=category)
+		todos = Todo.objects.filter(datecompleted__isnull=True, category=category, is_active=True)
 		params = {'todos':todos}
 		return render(request, 'todos/currenttodo.html', params)
 	else:
 		currentMonth = datetime.now().month
-		match currentMonth:
-			case 1:
-				quarter="Delivery 1Q23"
-			case 2:
-				quarter="Delivery 1Q23"
-			case 3:
-				quarter="Delivery 1Q23"
-			case 4:
-				quarter="Delivery 2Q23"
-			case 5:
-				quarter="Delivery 2Q23"
-			case 6:
-				quarter="Delivery 2Q23"
-			case 7:
-				quarter="Delivery 3Q23"
-			case 8:
-				quarter="Delivery 3Q23"
-			case 9:
-				quarter="Delivery 3Q23"
-			case 10:
-				quarter="Delivery 4Q23"
-			case 11:
-				quarter="Delivery 4Q23"
-			case 12:
-				quarter="Delivery 4Q23"
-		todos = Todo.objects.filter(datecompleted__isnull=True, category=quarter)
-		params = {'todos':todos}
+		currentYear = datetime.now().year
+		currentYear = str(currentYear)
+		currentYear = currentYear[2:4]
+		Q1 = [1,2,3]
+		Q2 = [4,5,6]
+		Q3 = [7,8,9]
+		Q4 = [10,11,12]
+		if currentMonth in Q1:
+			quarter="Delivery 1Q"+currentYear
+		elif currentMonth in Q2:
+			quarter="Delivery 2Q"+currentYear
+		elif currentMonth in Q3:
+			quarter="Delivery 3Q"+currentYear
+		else:
+			quarter="Delivery 4Q"+currentYear
+		todos = Todo.objects.filter(datecompleted__isnull=True, category=quarter, is_active=True)
+		params = {'todos':todos,
+					'Delivery':True}
 		return render(request, 'todos/currenttodo.html', params)
 
 def catcurrenttodo(request, category):
-	todos = Todo.objects.filter(datecompleted__isnull=True, category=category)
+	todos = Todo.objects.filter(datecompleted__isnull=True, category=category, is_active=True)
 	params = {'todos':todos}
 	return render(request, 'todos/catcurrenttodo.html', params)
 
 def completedtodo(request):
 	if request.method == 'GET':
-		todos = Todo.objects.filter(datecompleted__isnull=False).order_by('-datecompleted')
+		todos = Todo.objects.filter(datecompleted__isnull=False, is_active=True).order_by('-datecompleted')
 		params = {'todos':todos}
 		return render(request, 'todos/completedtodo.html', params)
 
 def currentcompletedtodo(request):
 	if request.method == 'GET':
 		currentMonth = datetime.now().month
-		match currentMonth:
-			case 1:
-				quarter="Delivery 1Q23"
-			case 2:
-				quarter="Delivery 1Q23"
-			case 3:
-				quarter="Delivery 1Q23"
-			case 4:
-				quarter="Delivery 2Q23"
-			case 5:
-				quarter="Delivery 2Q23"
-			case 6:
-				quarter="Delivery 2Q23"
-			case 7:
-				quarter="Delivery 3Q23"
-			case 8:
-				quarter="Delivery 3Q23"
-			case 9:
-				quarter="Delivery 3Q23"
-			case 10:
-				quarter="Delivery 4Q23"
-			case 11:
-				quarter="Delivery 4Q23"
-			case 12:
-				quarter="Delivery 4Q23"
-		todos = Todo.objects.filter(datecompleted__isnull=False, category=quarter).order_by('-datecompleted')
-		params = {'todos':todos}
+		currentYear = datetime.now().year
+		currentYear = str(currentYear)
+		currentYear = currentYear[2:4]
+		Q1 = [1,2,3]
+		Q2 = [4,5,6]
+		Q3 = [7,8,9]
+		Q4 = [10,11,12]
+		if currentMonth in Q1:
+			quarter="Delivery 1Q"+currentYear
+		elif currentMonth in Q2:
+			quarter="Delivery 2Q"+currentYear
+		elif currentMonth in Q3:
+			quarter="Delivery 3Q"+currentYear
+		else:
+			quarter="Delivery 4Q"&currentYear
+		todos = Todo.objects.filter(datecompleted__isnull=False, category=quarter, is_active=True).order_by('-datecompleted')
+		params = {'todos':todos,
+					'Delivery':True}
 		return render(request, 'todos/completedtodo.html', params)
 
 def create(request):

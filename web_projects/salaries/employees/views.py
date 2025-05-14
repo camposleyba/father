@@ -22,8 +22,11 @@ def home(request):
 			midp = mid_exchrate.objects.get(band='B6')
 			exchg = midp.exch_rate
 			countb6 += 1
-		else:
+		elif employee.band == "B8":
 			midp = mid_exchrate.objects.get(band='B8')
+			exchg = midp.exch_rate
+		else:
+			midp = mid_exchrate.objects.get(band='B9')
 			exchg = midp.exch_rate
 
 		if employee.designation == "RPA Developer":
@@ -110,8 +113,11 @@ def calculateincrease(request, pk):
 		elif employee.band == "B6":
 			midp = mid_exchrate.objects.get(band='B6')
 			exchg = midp.exch_rate
-		else:
+		elif employee.band == "B8":
 			midp = mid_exchrate.objects.get(band='B8')
+			exchg = midp.exch_rate
+		else:
+			midp = mid_exchrate.objects.get(band='B9')
 			exchg = midp.exch_rate
 		percen = request.POST.get('percentage')
 		try:

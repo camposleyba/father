@@ -5,7 +5,7 @@ from .models import Expense, qBudget
 class ExpenseForm(ModelForm):
 	class Meta:
 		model = Expense
-		fields = ['quarter','title','description','monto','rendido']
+		fields = ['quarter','title','description','expense_date','monto','rendido']
 
 class BudgetForm(ModelForm):
 	class Meta:

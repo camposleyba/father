@@ -8,6 +8,7 @@ class Todo(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 	datecompleted = models.DateTimeField(null=True, blank=True)
 	important = models.BooleanField(default=False)
+	is_active = models.BooleanField(default=True)
 
 
 	def __str__(self):
